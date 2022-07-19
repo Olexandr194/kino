@@ -2,11 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['namespace' => 'Main'], function (){
+    Route::get('/', function () { return view('welcome');});
 });
 
-Auth::routes();
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
+    Route::get('/', [App\Http\Controllers\Admin\IndexController::class, '__invoke'])->name('admin.main');
+});
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+\Illuminate\Support\Facades\Auth::routes();
+
