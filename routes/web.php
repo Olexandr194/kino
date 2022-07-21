@@ -16,7 +16,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
 
     });
     Route::group(['namespace' => 'Cinema', 'prefix' => 'cinema_halls'], function (){
-        Route::get('/', [App\Http\Controllers\Admin\CinemaHallsController::class, 'index'])->name('admin.cinema_halls.index');
+        Route::get('/create', [App\Http\Controllers\Admin\CinemaHallsController::class, 'create'])->name('admin.cinema_halls.create');
+        Route::post('/', [App\Http\Controllers\Admin\CinemaHallsController::class, 'store'])->name('admin.cinema_halls.store');
 
     });
 

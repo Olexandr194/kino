@@ -1,4 +1,5 @@
 @extends('admin.layout')
+@section('title', 'Кінотеатри')
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -25,17 +26,17 @@
                         </figure>
                     </div>
                 </div>
-
-
             </div>
         </section>
     </div>
 
-   {{-- <style>
-        .add-img
+    <style>
+        .fa-times
         {
-            border: 2px black double;
+            color: red;
+            text-align: end;
         }
-    </style>--}}
+    </style>
+
 @endsection
 

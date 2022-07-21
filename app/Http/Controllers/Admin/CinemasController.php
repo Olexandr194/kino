@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CinemaStoreRequest;
 use App\Models\Cinema;
+use App\Models\CinemaHall;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,7 +19,8 @@ class CinemasController extends Controller
 
     public function create()
     {
-        return view('admin.cinemas.create');
+        $cinema_halls = CinemaHall::all();
+        return view('admin.cinemas.create', compact('cinema_halls'));
     }
 
     public function store(CinemaStoreRequest $request)
