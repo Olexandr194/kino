@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/test.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @yield('custom_js')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -90,7 +93,7 @@
 <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('dist/js/adminlte.js') }}"></script>
-
+@yield('custom_js')
 <script>
     $(document).ready(function () {
         $('#summernote').summernote({

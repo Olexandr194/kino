@@ -9,4 +9,9 @@ class CinemaHall extends Model
 {
     protected $table = 'cinema_halls';
     protected $guarded = false;
+
+    public function cinema_hall_images()
+    {
+        return $this->hasMany(CinemaHallImage::class, 'cinema_hall_id', 'id');
+    }
 }

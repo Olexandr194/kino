@@ -26,8 +26,10 @@
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
                     <div class="col-12 ml-2">
-                        <form action="{{ route('admin.cinema_halls.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.cinema_halls.update', $cinema_hall->id) }}" method="POST"
+                              enctype="multipart/form-data">
                             @csrf
+                            @method('PATCH')
                             <div class="form-group">
                                 <div class="d-flex">
                                     <div class="col-md-2">
@@ -36,7 +38,7 @@
                                     <div class="col-md-4">
                                         <input type="number" class="form-control" name="number"
                                                placeholder="Номер залу"
-                                               value="{{ old('number') }}">
+                                               value="{{ $cinema_hall->number }}">
                                         @error('number')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -50,7 +52,7 @@
                                     </div>
                                     <div class="col-md-9">
                                             <textarea id="summernote"
-                                                      name="description">{{ old('description') }}</textarea>
+                                                      name="description">{{ $cinema_hall->description }}</textarea>
                                         @error('description')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -67,7 +69,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label>
-                                            <img id="schemeImg" src="{{ asset('images/img_3.png') }}"
+                                            <img id="schemeImg" src="{{ url('storage/' . $cinema_hall->scheme) }}"
                                                  class="add-img">
                                         </label>
                                     </div>
@@ -97,7 +99,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label>
-                                            <img id="mainImage" src="{{ asset('images/img_3.png') }}"
+                                            <img id="mainImage" src="{{ url('storage/' . $cinema_hall->main_image) }}"
                                                  class="add-img">
                                         </label>
                                     </div>
@@ -115,9 +117,6 @@
                                     @error('main_image')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                    @error('image')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
                             </div>
 
@@ -128,78 +127,29 @@
                                     <div class="col-md-2">
                                         <label>Галерея зображень</label>
                                     </div>
-                                    <div class="col-md-2">
-                                        <label>
-                                                <span class="close"
-                                                      onclick="document.getElementById('image1').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image1" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
-                                        </label>
-                                        <input type="file" id="img1-btn" accept="image/*" name="image[]"
-                                               onchange="document.getElementById('image1').src = window.URL.createObjectURL(this.files[0])"
-                                               hidden/>
-                                        <label class="input text-center" for="img1-btn"
-                                               style="width: 200px">Додати</label>
-                                        @error('image')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>
-                                                <span class="close"
-                                                      onclick="document.getElementById('image2').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image2" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
-                                        </label>
-                                        <input type="file" id="img2-btn" accept="image/*" name="image[]"
-                                               onchange="document.getElementById('image2').src = window.URL.createObjectURL(this.files[0])"
-                                               hidden/>
-                                        <label class="input text-center" for="img2-btn"
-                                               style="width: 200px">Додати</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>
-                                                <span class="close"
-                                                      onclick="document.getElementById('image3').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image3" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
-                                        </label>
-                                        <input type="file" id="img3-btn" accept="image/*" name="image[]"
-                                               onchange="document.getElementById('image3').src = window.URL.createObjectURL(this.files[0])"
-                                               hidden/>
-                                        <label class="input text-center" for="img3-btn"
-                                               style="width: 200px">Додати</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>
-                                                <span class="close"
-                                                      onclick="document.getElementById('image4').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image4" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
-                                        </label>
-                                        <input type="file" id="img4-btn" accept="image/*" name="image[]"
-                                               onchange="document.getElementById('image4').src = window.URL.createObjectURL(this.files[0])"
-                                               hidden/>
-                                        <label class="input text-center" for="img4-btn"
-                                               style="width: 200px">Додати</label>
 
-                                    </div>
+                                    @for ($i = 0; $i < 5; $i++)
                                     <div class="col-md-2">
                                         <label>
                                                 <span class="close"
-                                                      onclick="document.getElementById('image5').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image5" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
+                                                      onclick="document.getElementById('image{{ $i }}').src = '{{ asset('images/img_3.png') }}'"></span>
+                                            @if (isset($image[$i]))
+                                                <img id="image{{ $i }}" src="{{ url('storage/' . $image[$i]) }}"
+                                                     class="add-img">
+                                            @else
+                                                <img id="image{{ $i }}" src="{{ asset('images/img_3.png') }}"
+                                                     class="add-img">
+                                            @endif
                                         </label>
-                                        <input type="file" id="img5-btn" accept="image/*" name="image[]"
-                                               onchange="document.getElementById('image5').src = window.URL.createObjectURL(this.files[0])"
+                                        <input type="file" id="img{{ $i }}-btn" accept="image/*" name="image[]"
+                                               onchange="document.getElementById('image{{ $i }}').src = window.URL.createObjectURL(this.files[0])"
                                                hidden/>
-                                        <label class="input text-center" for="img5-btn"
+                                        <label class="input text-center" for="img{{ $i }}-btn"
                                                style="width: 200px">Додати</label>
                                     </div>
+                                    @endfor
                                 </div>
                             </div>
-
 
                             {{--------------------------------------------------------------------------------------------------------------------------------------------}}
 
@@ -217,7 +167,7 @@
                                             <label>URL:</label>
                                             <input type="text" class="form-control" name="seo_url"
                                                    placeholder="URL"
-                                                   value="{{ old('seo_url') }}">
+                                                   value="{{ $cinema_hall->seo_url }}">
                                             @error('seo_url')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -226,7 +176,7 @@
                                             <label>Title:</label>
                                             <input type="text" class="form-control" name="seo_title"
                                                    placeholder="Title"
-                                                   value="{{ old('seo_title') }}">
+                                                   value="{{ $cinema_hall->seo_title }}">
                                             @error('seo_title')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -235,7 +185,7 @@
                                             <label>Keywords:</label>
                                             <input type="text" class="form-control" name="seo_keywords"
                                                    placeholder="Keywords"
-                                                   value="{{ old('seo_keywords') }}">
+                                                   value="{{ $cinema_hall->seo_keywords }}">
                                             @error('seo_keywords')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -244,7 +194,7 @@
                                             <label>Description:</label>
                                             <input type="text" class="form-control" name="seo_description"
                                                    placeholder="Description"
-                                                   value="{{ old('seo_description') }}">
+                                                   value="{{ $cinema_hall->seo_description }}">
                                             @error('seo_description')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
