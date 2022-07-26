@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\CinemaHalls;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CinemaHallStoreRequest extends FormRequest
+class CinemaHallUpdateRequest extends FormRequest
 {
     public function authorize()
     {
@@ -17,8 +17,8 @@ class CinemaHallStoreRequest extends FormRequest
         return [
             'number' => 'required',
             'description' => 'required',
-            'scheme' => 'required|file',
-            'main_image' => 'required|file',
+            'scheme' => 'nullable|file',
+            'main_image' => 'nullable|file',
             'seo_url' => 'nullable',
             'seo_title' => 'nullable',
             'seo_keywords' => 'nullable',

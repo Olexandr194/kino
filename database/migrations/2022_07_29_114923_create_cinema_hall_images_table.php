@@ -16,7 +16,14 @@ return new class extends Migration
         Schema::create('cinema_hall_images', function (Blueprint $table) {
             $table->id();
             $table->string('image');
-            $table->bigInteger('cinema_hall_id')->nullable();
+            $table->bigInteger('cinema_hall_id');
+
+            $table->foreign('cinema_hall_id')
+                ->on('cinema_halls')
+                ->references('id')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

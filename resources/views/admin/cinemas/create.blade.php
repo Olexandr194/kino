@@ -143,73 +143,24 @@
                                     <div class="col-md-2">
                                         <label>Галерея зображень</label>
                                     </div>
-                                    <div class="col-md-2">
-                                        <label>
+                                    @for ($i = 0; $i < 5; $i++)
+                                        <div class="col-md-2">
+                                            <label>
                                                 <span class="close"
-                                                      onclick="document.getElementById('image1').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image1" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
-                                        </label>
-                                        <input type="file" id="img1-btn" accept="image/*" name="image"
-                                               onchange="document.getElementById('image1').src = window.URL.createObjectURL(this.files[0])"
-                                               hidden/>
-                                        <label class="input text-center" for="img1-btn"
-                                               style="width: 200px">Додати</label>
-
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>
-                                                <span class="close"
-                                                      onclick="document.getElementById('image2').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image2" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
-                                        </label>
-                                        <input type="file" id="img2-btn" accept="image/*" name="image"
-                                               onchange="document.getElementById('image2').src = window.URL.createObjectURL(this.files[0])"
-                                               hidden/>
-                                        <label class="input text-center" for="img2-btn"
-                                               style="width: 200px">Додати</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>
-                                                <span class="close"
-                                                      onclick="document.getElementById('image3').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image3" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
-                                        </label>
-                                        <input type="file" id="img3-btn" accept="image/*" name="image"
-                                               onchange="document.getElementById('image3').src = window.URL.createObjectURL(this.files[0])"
-                                               hidden/>
-                                        <label class="input text-center" for="img3-btn"
-                                               style="width: 200px">Додати</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>
-                                                <span class="close"
-                                                      onclick="document.getElementById('image4').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image4" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
-                                        </label>
-                                        <input type="file" id="img4-btn" accept="image/*" name="image"
-                                               onchange="document.getElementById('image4').src = window.URL.createObjectURL(this.files[0])"
-                                               hidden/>
-                                        <label class="input text-center" for="img4-btn"
-                                               style="width: 200px">Додати</label>
-
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>
-                                                <span class="close"
-                                                      onclick="document.getElementById('image5').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image5" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
-                                        </label>
-                                        <input type="file" id="img5-btn" accept="image/*" name="image"
-                                               onchange="document.getElementById('image5').src = window.URL.createObjectURL(this.files[0])"
-                                               hidden/>
-                                        <label class="input text-center" for="img5-btn"
-                                               style="width: 200px">Додати</label>
-                                    </div>
+                                                      onclick="document.getElementById('image{{$i}}').src = '{{ asset('images/img_3.png') }}'"></span>
+                                                <img id="image{{$i}}" src="{{ asset('images/img_3.png') }}"
+                                                     class="add-img">
+                                            </label>
+                                            <input type="file" id="img{{$i}}-btn" accept="image/*" name="image[]"
+                                                   onchange="document.getElementById('image{{$i}}').src = window.URL.createObjectURL(this.files[0])"
+                                                   hidden/>
+                                            <label class="input text-center" for="img{{$i}}-btn"
+                                                   style="width: 200px">Додати</label>
+                                            @error('image')
+                                            <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    @endfor
                                 </div>
                             </div>
 
@@ -221,44 +172,76 @@
                                     <div class="col-12">
                                         <h2><strong>Список зал:</strong></h2>
                                     </div>
-                                    <div class="col-md-11">
-                                        <div class="ajax-halls">
-                                        <table class="table table-bordered">
-                                            <thead class="col-md-3">
-                                            <tr>
-                                                <th class="text-center">Назва</th>
-                                                <th class="text-center">Дата створення</th>
-                                                <th class="border-transparent"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="col-md-7">
+                                    @if (isset($cinema_halls))
+                                        <div class="col-md-11">
+                                            <div class="ajax-halls">
+                                                <table class="table table-bordered">
+                                                    <thead class="col-md-3">
+                                                    <tr>
+                                                        <th class="text-center">Назва</th>
+                                                        <th class="text-center">Дата створення</th>
+                                                        <th class="border-transparent"></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="col-md-7">
+                                                    @if(count($cinema_halls) == 1)
+                                                        <tr class="hall">
+                                                            <td class="text-center">Зал №{{ $cinema_halls[0]->number }}</td>
+                                                            <td>{{ $cinema_halls[0]->created_at }}</td>
+                                                            <input type="hidden" class="cinema_hall_id"
+                                                                   value="{{ $cinema_halls[0]->id }}">
+                                                            <td class="border-transparent col-md-1 text-left">
+                                                                <a class="ml-4" href="{{ route('admin.cinema_halls.edit', $cinema_halls[0]->id) }}"><i
+                                                                        class="fas fa-pencil-alt text-dark"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    @elseif(count($cinema_halls) > 1)
+                                                        <tr class="hall">
+                                                            <td class="text-center">Зал №{{ $cinema_halls[0]->number }}</td>
+                                                            <td>{{ $cinema_halls[0]->created_at }}</td>
+                                                            <input type="hidden" class="cinema_hall_id"
+                                                                   value="{{ $cinema_halls[0]->id }}">
 
-                                            @foreach($cinema_halls as $cinema_hall)
-                                                <tr class="hall">
-                                                    <td class="text-center">Зал №{{ $cinema_hall->number }}</td>
-                                                    <td>{{ $cinema_hall->created_at }}</td>
-                                                    <input type="hidden" class="cinema_hall_id" value="{{ $cinema_hall->id }}">
+                                                            <td class="border-transparent col-md-1 text-left">
+                                                                <a class="ml-4" href="{{ route('admin.cinema_halls.edit', $cinema_halls[0]->id) }}"><i
+                                                                        class="fas fa-pencil-alt text-dark"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                        @for($i=1; $i<count($cinema_halls); $i++)
+                                                            <tr class="hall">
+                                                                <td class="text-center">Зал №{{ $cinema_halls[$i]->number }}</td>
+                                                                <td>{{ $cinema_halls[$i]->created_at }}</td>
+                                                                <input type="hidden" class="cinema_hall_id"
+                                                                       value="{{ $cinema_halls[$i]->id }}">
 
-                                                    <td class="border-transparent col-md-1">
-                                                        <a href="{{ route('admin.cinema_halls.edit', $cinema_hall->id) }}"><i
-                                                                class="fas fa-pencil-alt text-dark"></i></a>
-                                                        <div class="delete-hall fas fa-trash text-dark ml-3" style="cursor: pointer"></div>
-
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-
-                                            </tbody>
-                                        </table>
+                                                                <td class="border-transparent col-md-1">
+                                                                    <a href="{{ route('admin.cinema_halls.edit', $cinema_halls[$i]->id) }}"><i
+                                                                            class="fas fa-pencil-alt text-dark"></i></a>
+                                                                    <div class="delete-hall fas fa-trash text-dark ml-3" style="cursor: pointer"></div>
+                                                                </td>
+                                                            </tr>
+                                                        @endfor
+                                                    @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="text-center mt-4">
-                                        <p><a href="{{ route('admin.cinema_halls.create') }}" class="">
-                                                <button style="width: 250px" type="button" class="btn btn-dark"><i
-                                                        class="fa fa-plus-circle"></i> Створити зал
-                                                </button>
-                                            </a>
-                                    </div>
+                                        <div class="text-center mt-4">
+                                            <p><a href="{{ route('admin.cinema_halls.create') }}" class="">
+                                                    <button style="width: 250px" type="button" class="btn btn-dark"><i
+                                                            class="fa fa-plus-circle"></i> Створити зал
+                                                    </button>
+                                                </a>
+                                        </div>
+                                    @else
+                                        <div class="text-center mt-4">
+                                            <p><a href="{{ route('admin.cinema_halls.create') }}" class="">
+                                                    <button style="width: 250px" type="button" class="btn btn-dark"><i
+                                                            class="fa fa-plus-circle"></i> Створити зал
+                                                    </button>
+                                                </a>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
 
@@ -389,36 +372,36 @@
 
     </style>
     <script>
-            $(function () {
-                $(document).on('click', '.delete-hall', function (event) {
-                    event.preventDefault();
-                    let cinema_hall_id = $(this).closest('.hall').find('.cinema_hall_id').val();
-                    $.ajax({
-                        url: "{{ route('admin.cinemas.destroy_hall') }}",
-                        type: "POST",
-                        data: {
-                            'id': cinema_hall_id,
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: (data) => {
-                            $('.ajax-halls').html(data);
-                        },
-                        error: (data) => {
-                            console.log(data)
-                        }
-                    });
+        $(function () {
+            $(document).on('click', '.delete-hall', function (event) {
+                event.preventDefault();
+                let cinema_hall_id = $(this).closest('.hall').find('.cinema_hall_id').val();
+                $.ajax({
+                    url: "{{ route('admin.cinemas.destroy_hall') }}",
+                    type: "POST",
+                    data: {
+                        'id': cinema_hall_id,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: (data) => {
+                        $('.ajax-halls').html(data);
+                    },
+                    error: (data) => {
+                        console.log(data)
+                    }
                 });
             });
+        });
 
-           /* $(document).ready(function (){
-                $('.delete-hall').click(function (){
-                    let val = $(this).closest('.hall').find('.cinema_hall_id').val();;
+        /* $(document).ready(function (){
+             $('.delete-hall').click(function (){
+                 let val = $(this).closest('.hall').find('.cinema_hall_id').val();;
 
-                    console.log(val);
-                })
-            })*/
+                 console.log(val);
+             })
+         })*/
     </script>
 
 @endsection

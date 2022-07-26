@@ -115,9 +115,6 @@
                                     @error('main_image')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                    @error('image')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
                             </div>
 
@@ -128,78 +125,26 @@
                                     <div class="col-md-2">
                                         <label>Галерея зображень</label>
                                     </div>
+                                    @for ($i = 0; $i < 5; $i++)
                                     <div class="col-md-2">
                                         <label>
                                                 <span class="close"
-                                                      onclick="document.getElementById('image1').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image1" src="{{ asset('images/img_3.png') }}"
+                                                      onclick="document.getElementById('image{{$i}}').src = '{{ asset('images/img_3.png') }}'"></span>
+                                            <img id="image{{$i}}" src="{{ asset('images/img_3.png') }}"
                                                  class="add-img">
                                         </label>
-                                        <input type="file" id="img1-btn" accept="image/*" name="image[]"
-                                               onchange="document.getElementById('image1').src = window.URL.createObjectURL(this.files[0])"
+                                        <input type="file" id="img{{$i}}-btn" accept="image/*" name="image[]"
+                                               onchange="document.getElementById('image{{$i}}').src = window.URL.createObjectURL(this.files[0])"
                                                hidden/>
-                                        <label class="input text-center" for="img1-btn"
+                                        <label class="input text-center" for="img{{$i}}-btn"
                                                style="width: 200px">Додати</label>
                                         @error('image')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="col-md-2">
-                                        <label>
-                                                <span class="close"
-                                                      onclick="document.getElementById('image2').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image2" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
-                                        </label>
-                                        <input type="file" id="img2-btn" accept="image/*" name="image[]"
-                                               onchange="document.getElementById('image2').src = window.URL.createObjectURL(this.files[0])"
-                                               hidden/>
-                                        <label class="input text-center" for="img2-btn"
-                                               style="width: 200px">Додати</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>
-                                                <span class="close"
-                                                      onclick="document.getElementById('image3').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image3" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
-                                        </label>
-                                        <input type="file" id="img3-btn" accept="image/*" name="image[]"
-                                               onchange="document.getElementById('image3').src = window.URL.createObjectURL(this.files[0])"
-                                               hidden/>
-                                        <label class="input text-center" for="img3-btn"
-                                               style="width: 200px">Додати</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>
-                                                <span class="close"
-                                                      onclick="document.getElementById('image4').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image4" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
-                                        </label>
-                                        <input type="file" id="img4-btn" accept="image/*" name="image[]"
-                                               onchange="document.getElementById('image4').src = window.URL.createObjectURL(this.files[0])"
-                                               hidden/>
-                                        <label class="input text-center" for="img4-btn"
-                                               style="width: 200px">Додати</label>
-
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>
-                                                <span class="close"
-                                                      onclick="document.getElementById('image5').src = '{{ asset('images/img_3.png') }}'"></span>
-                                            <img id="image5" src="{{ asset('images/img_3.png') }}"
-                                                 class="add-img">
-                                        </label>
-                                        <input type="file" id="img5-btn" accept="image/*" name="image[]"
-                                               onchange="document.getElementById('image5').src = window.URL.createObjectURL(this.files[0])"
-                                               hidden/>
-                                        <label class="input text-center" for="img5-btn"
-                                               style="width: 200px">Додати</label>
-                                    </div>
+                                    @endfor
                                 </div>
                             </div>
-
 
                             {{--------------------------------------------------------------------------------------------------------------------------------------------}}
 

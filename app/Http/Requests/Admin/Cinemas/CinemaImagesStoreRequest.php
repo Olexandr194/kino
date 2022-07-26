@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Cinemas;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CinemaHallImagesUpdateRequest extends FormRequest
+class CinemaImagesStoreRequest extends FormRequest
 {
     public function authorize()
     {
@@ -15,7 +15,7 @@ class CinemaHallImagesUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'nullable|array',
+            'image' => 'required|array',
             'image.*' => 'file',
         ];
     }

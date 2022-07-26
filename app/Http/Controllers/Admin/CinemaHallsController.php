@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\CinemaHallImagesStoreRequest;
-use App\Http\Requests\Admin\CinemaHallImagesUpdateRequest;
-use App\Http\Requests\Admin\CinemaHallStoreRequest;
-use App\Http\Requests\Admin\CinemaHallUpdateRequest;
-use App\Http\Requests\Admin\CinemaStoreRequest;
-use App\Models\Cinema;
+use App\Http\Requests\Admin\CinemaHalls\CinemaHallImagesStoreRequest;
+use App\Http\Requests\Admin\CinemaHalls\CinemaHallImagesUpdateRequest;
+use App\Http\Requests\Admin\CinemaHalls\CinemaHallStoreRequest;
+use App\Http\Requests\Admin\CinemaHalls\CinemaHallUpdateRequest;
 use App\Models\CinemaHall;
 use App\Models\CinemaHallImage;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class CinemaHallsController extends Controller

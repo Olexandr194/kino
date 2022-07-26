@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\CinemaHalls;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CinemaHallImagesStoreRequest extends FormRequest
+class CinemaHallImagesUpdateRequest extends FormRequest
 {
     public function authorize()
     {

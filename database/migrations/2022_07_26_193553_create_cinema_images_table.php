@@ -14,15 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('cinema_images', function (Blueprint $table) {
-            $table->id();
-            $table->string('image');
-            $table->bigInteger('cinemas_id')->unsigned();
-            $table->foreign('cinemas_id')
-                ->on('cinemas')
-                ->references('id')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->timestamps();
+                $table->id();
+                $table->string('image');
+                $table->bigInteger('cinemas_id')->nullable();
+                $table->foreign('cinemas_id')
+                    ->on('cinemas')
+                    ->references('id')
+                    ->onDelete('cascade');
+                $table->timestamps();
         });
     }
 
