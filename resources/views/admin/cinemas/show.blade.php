@@ -170,66 +170,9 @@
     </div>
 
     <style>
-        label.input {
-            background-color: darkslategrey;
-            color: white;
-            padding: 0.5rem;
-            font-family: sans-serif;
-            border-radius: 0.3rem;
-            cursor: pointer;
-            margin-top: 1rem;
-        }
-
-        label.delete {
-            background-color: darkslategrey;
-            color: white;
-            padding: 0.5rem;
-            font-family: sans-serif;
-            border-radius: 0.3rem;
-            cursor: pointer;
-            margin-top: 1rem;
-        }
-
-        .add-img, #bannerImage {
+        .add-img {
             height: 150px;
             width: 200px;
-        }
-
-        #logoImage {
-            height: 150px;
-            width: 200px;
-        }
-
-        .close {
-            position: absolute;
-            right: 35px;
-            top: -15px;
-            width: 32px;
-            height: 32px;
-            opacity: 1;
-            cursor: pointer;
-        }
-
-        .close:hover {
-            opacity: 1;
-        }
-
-        .close:before, .close:after {
-            position: absolute;
-            left: 15px;
-            content: ' ';
-            height: 33px;
-            width: 2px;
-            color: red;
-            background-color: red;
-        }
-
-        .close:before {
-            transform: rotate(45deg);
-        }
-
-        .close:after {
-            transform: rotate(-45deg);
         }
 
     </style>

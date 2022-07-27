@@ -9,6 +9,14 @@
     <div class="sidebar">
         <ul class="pt-3 nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
+                <a href="{{ route('admin.movies.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-file-video"></i>
+                    <p>
+                        Фільми
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('admin.cinemas.index') }}" class="nav-link">
                     <i class="nav-icon fas fa-film"></i>
                     <p>
@@ -17,6 +25,5 @@
                 </a>
             </li>
         </ul>
-
     </div>
 </aside>
