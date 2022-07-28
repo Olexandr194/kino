@@ -34,6 +34,22 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
         Route::post('/movie_delete', [App\Http\Controllers\Admin\MoviesController::class, 'destroy_movie'])->name('admin.movies.destroy_movie');
     });
 
+    Route::group(['namespace' => 'News', 'prefix' => 'news'], function (){
+        Route::get('/', [App\Http\Controllers\Admin\NewsController::class, 'index'])->name('admin.news.index');
+        Route::get('/create', [App\Http\Controllers\Admin\NewsController::class, 'create'])->name('admin.news.create');
+        Route::post('/', [App\Http\Controllers\Admin\NewsController::class, 'store'])->name('admin.news.store');
+        Route::get('/{news}/edit', [App\Http\Controllers\Admin\NewsController::class, 'edit'])->name('admin.news.edit');
+        Route::patch('/{news}', [App\Http\Controllers\Admin\NewsController::class, 'update'])->name('admin.news.update');
+        Route::post('/news_delete', [App\Http\Controllers\Admin\NewsController::class, 'destroy_news'])->name('admin.news.destroy_news');
+    });
+
+    Route::group(['namespace' => 'Actions', 'prefix' => 'actions'], function (){
+        Route::get('/', [App\Http\Controllers\Admin\ActionsController::class, 'index'])->name('admin.actions.index');
+        Route::get('/create', [App\Http\Controllers\Admin\ActionsController::class, 'create'])->name('admin.actions.create');
+        Route::post('/', [App\Http\Controllers\Admin\ActionsController::class, 'store'])->name('admin.actions.store');
+
+    });
+
 });
 
 

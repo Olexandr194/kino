@@ -24,6 +24,22 @@
                     </p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.news.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-newspaper"></i>
+                    <p>
+                        Новини
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.actions.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-percent"></i>
+                    <p>
+                        Акції
+                    </p>
+                </a>
+            </li>
         </ul>
     </div>
 </aside>
