@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="col-md-11">
-                    <div class="ajax-news mt-5">
+                    <div class="ajax-actions mt-5">
                         <table class="table table-bordered">
                             <thead class="col-md-3">
                             <tr>
@@ -55,23 +55,23 @@
                             </tr>
                             </thead>
                             <tbody class="col-md-7">
-                         {{--   @foreach($news as $item)
-                                <tr class="news text-center">
+                            @foreach($actions as $item)
+                                <tr class="action text-center">
                                     <td class="">{{ $item->title }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>{{ $item->status }}</td>
-                                    <input type="hidden" class="news_id"
+                                    <input type="hidden" class="action_id"
                                            value="{{ $item->id }}">
 
                                     <td class="border-transparent col-md-1 text-left">
                                         <a class="ml-4"
-                                           href="{{ route('admin.news.edit', $item->id) }}"><i
+                                           href="{{ route('admin.actions.edit', $item->id) }}"><i
                                                 class="fas fa-pencil-alt text-dark"></i></a>
-                                        <div class="delete-news fas fa-trash text-dark ml-3"
+                                        <div class="delete-action fas fa-trash text-dark ml-3"
                                              style="cursor: pointer"></div>
                                     </td>
                                 </tr>
-                            @endforeach--}}
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -87,20 +87,20 @@
     </style>
     <script>
         $(function () {
-            $(document).on('click', '.delete-news', function (event) {
+            $(document).on('click', '.delete-action', function (event) {
                 event.preventDefault();
-                let news_id = $(this).closest('.news').find('.news_id').val();
+                let action_id = $(this).closest('.action').find('.action_id').val();
                 $.ajax({
-                    url: "{{ route('admin.news.destroy_news') }}",
+                    url: "{{ route('admin.actions.destroy_action') }}",
                     type: "POST",
                     data: {
-                        'id': news_id,
+                        'id': action_id,
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: (data) => {
-                        $('.ajax-news').html(data);
+                        $('.ajax-actions').html(data);
                     },
                     error: (data) => {
                         console.log(data)

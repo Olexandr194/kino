@@ -1,11 +1,12 @@
 @extends('admin.layout')
-@section('title', 'Новини')
+@section('title', 'Акції')
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <form action="{{ route('admin.news.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.actions.update', $action->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PATCH')
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row">
@@ -40,12 +41,12 @@
                             <div class="form-group">
                                 <div class="d-flex">
                                     <div class="col-md-2">
-                                        <label>Назва новини:</label>
+                                        <label>Назва акції:</label>
                                     </div>
                                     <div class="col-md-4 mr-5">
                                         <input type="text" class="form-control" name="title"
                                                placeholder="Назва новини"
-                                               value="{{ old('title') }}">
+                                               value="{{ $action->title }}">
                                         @error('title')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -58,7 +59,7 @@
                                             <div class="input-group date" id="datetimepicker4"
                                                  data-target-input="nearest">
                                                 <input type="text" class="form-control datetimepicker-input"
-                                                       data-target="#datetimepicker4" name="date"/>
+                                                       data-target="#datetimepicker4" name="date" value="{{ $action->date }}"/>
                                                 <div class="input-group-append" data-target="#datetimepicker4"
                                                      data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -79,7 +80,7 @@
                                     </div>
                                     <div class="col-md-9">
                                             <textarea id="summernote"
-                                                      name="description">{{ old('description') }}</textarea>
+                                                      name="description">{{ $action->description }}</textarea>
                                         @error('description')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -96,7 +97,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label>
-                                            <img id="mainImage" src="{{ asset('images/img_3.png') }}"
+                                            <img id="mainImage" src="{{ url('storage/' . $action->main_image) }}"
                                                  class="add-img">
                                         </label>
                                     </div>
@@ -129,18 +130,20 @@
                                         <div class="col-md-2">
                                             <label>
                                                 <span class="close"
-                                                      onclick="document.getElementById('image{{$i}}').src = '{{ asset('images/img_3.png') }}'"></span>
-                                                <img id="image{{$i}}" src="{{ asset('images/img_3.png') }}"
-                                                     class="add-img">
+                                                      onclick="document.getElementById('image{{ $i }}').src = '{{ asset('images/img_3.png') }}'"></span>
+                                                @if (isset($image[$i]))
+                                                    <img id="image{{ $i }}" src="{{ url('storage/' . $image[$i]) }}"
+                                                         class="add-img">
+                                                @else
+                                                    <img id="image{{ $i }}" src="{{ asset('images/img_3.png') }}"
+                                                         class="add-img">
+                                                @endif
                                             </label>
-                                            <input type="file" id="img{{$i}}-btn" accept="image/*" name="image[]"
-                                                   onchange="document.getElementById('image{{$i}}').src = window.URL.createObjectURL(this.files[0])"
+                                            <input type="file" id="img{{ $i }}-btn" accept="image/*" name="image[]"
+                                                   onchange="document.getElementById('image{{ $i }}').src = window.URL.createObjectURL(this.files[0])"
                                                    hidden/>
-                                            <label class="input text-center" for="img{{$i}}-btn"
+                                            <label class="input text-center" for="img{{ $i }}-btn"
                                                    style="width: 200px">Додати</label>
-                                            @error('image')
-                                            <div class="text-danger">{{ $message }}</div>
-                                            @enderror
                                         </div>
                                     @endfor
                                 </div>
@@ -156,7 +159,7 @@
                                         <div class="form-group w-100">
                                             <input type="text" class="form-control" name="link"
                                                    placeholder="Посилання на відео в YouTube"
-                                                   value="{{ old('link') }}">
+                                                   value="{{ $action->link }}">
                                             @error('link')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -176,7 +179,7 @@
                                             <label>URL:</label>
                                             <input type="text" class="form-control" name="seo_url"
                                                    placeholder="URL"
-                                                   value="{{ old('seo_url') }}">
+                                                   value="{{ $action->seo_url }}">
                                             @error('seo_url')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -185,7 +188,7 @@
                                             <label>Title:</label>
                                             <input type="text" class="form-control" name="seo_title"
                                                    placeholder="Title"
-                                                   value="{{ old('seo_title') }}">
+                                                   value="{{ $action->seo_title }}">
                                             @error('seo_title')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -194,7 +197,7 @@
                                             <label>Keywords:</label>
                                             <input type="text" class="form-control" name="seo_keywords"
                                                    placeholder="Keywords"
-                                                   value="{{ old('seo_keywords') }}">
+                                                   value="{{ $action->seo_keywords }}">
                                             @error('seo_keywords')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -203,7 +206,7 @@
                                             <label>Description:</label>
                                             <input type="text" class="form-control" name="seo_description"
                                                    placeholder="Description"
-                                                   value="{{ old('seo_description') }}">
+                                                   value="{{ $action->seo_description }}">
                                             @error('seo_description')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -213,7 +216,7 @@
                             </div>
                             <div class="form-group mt-5 ">
                                 <div class="text-center">
-                                    <input type="submit" class="btn btn-dark" value="Зберегти">
+                                    <input type="submit" class="btn btn-dark" value="Змінити">
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'Новини')
+@section('title', 'Акції')
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -13,9 +13,6 @@
                             <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                 <input type="checkbox" name="status" class="custom-control-input" id="customSwitch3"
                                        value="Опубліковано">
-                                @error('status')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
                                 <label class="custom-control-label" for="customSwitch3">Активувати</label>
                             </div>
                         </div><!-- /.col -->
@@ -40,11 +37,11 @@
                             <div class="form-group">
                                 <div class="d-flex">
                                     <div class="col-md-2">
-                                        <label>Назва новини:</label>
+                                        <label>Назва акції:</label>
                                     </div>
                                     <div class="col-md-4 mr-5">
                                         <input type="text" class="form-control" name="title"
-                                               placeholder="Назва новини"
+                                               placeholder="Назва акції"
                                                value="{{ old('title') }}">
                                         @error('title')
                                         <div class="text-danger">{{ $message }}</div>
@@ -64,6 +61,9 @@
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
                                             </div>
+                                            @error('date')
+                                            <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 

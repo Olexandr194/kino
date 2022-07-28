@@ -47,7 +47,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
         Route::get('/', [App\Http\Controllers\Admin\ActionsController::class, 'index'])->name('admin.actions.index');
         Route::get('/create', [App\Http\Controllers\Admin\ActionsController::class, 'create'])->name('admin.actions.create');
         Route::post('/', [App\Http\Controllers\Admin\ActionsController::class, 'store'])->name('admin.actions.store');
-
+        Route::get('/{action}/edit', [App\Http\Controllers\Admin\ActionsController::class, 'edit'])->name('admin.actions.edit');
+        Route::patch('/{action}', [App\Http\Controllers\Admin\ActionsController::class, 'update'])->name('admin.actions.update');
+        Route::post('/action_delete', [App\Http\Controllers\Admin\ActionsController::class, 'destroy_action'])->name('admin.actions.destroy_action');
     });
 
 });
