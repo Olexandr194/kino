@@ -70,7 +70,7 @@
                                     <div class="col-md-2">
                                         <label>
                                             <img id="mainImage" src="{{ url('storage/' . $movie->main_image) }}"
-                                                 class="add-img">
+                                                 class="add-img" style="height: 250px">
                                         </label>
                                     </div>
                                     <div class="col-md-1">

@@ -11,20 +11,41 @@ use App\Http\Requests\Admin\News\NewsImagesStoreRequest;
 use App\Http\Requests\Admin\News\NewsImagesUpdateRequest;
 use App\Http\Requests\Admin\News\NewsStoreRequest;
 use App\Http\Requests\Admin\News\NewsUpdateRequest;
+use App\Http\Requests\Admin\Pages\MainPageStoreRequest;
+use App\Http\Requests\Admin\Pages\MainPageUpdateRequest;
 use App\Models\Action;
 use App\Models\ActionImages;
+use App\Models\MainPage;
 use App\Models\News;
 use App\Models\NewsImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ActionsController extends Controller
+class PagesController extends Controller
 {
 
     public function index()
     {
-        $actions = Action::orderBy('created_at', 'DESC')->get();
-        return view('admin.actions.index', compact('actions'));
+        $main_page = MainPage::where('id', 1)->first();
+        return view('admin.pages.index', compact('main_page'));
+    }
+
+    public function main_page_edit()
+    {
+        $main_page = MainPage::where('id', 1)->first();
+        return view('admin.pages.edit_main_page', compact('main_page'));
+    }
+
+    public function main_page_update(MainPageUpdateRequest $request)
+    {
+        $data = $request->validated();
+        if(!isset($data['status'])) {
+            $data['status'] = 'Не опубліковано';
+        }
+        $main_page = MainPage::where('id', 1)->first();
+        $main_page->update($data);
+
+        return redirect()->route('admin.pages.index');
     }
 
     public function create()

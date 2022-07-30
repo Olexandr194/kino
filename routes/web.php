@@ -52,6 +52,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
         Route::post('/action_delete', [App\Http\Controllers\Admin\ActionsController::class, 'destroy_action'])->name('admin.actions.destroy_action');
     });
 
+    Route::group(['namespace' => 'Pages', 'prefix' => 'pages'], function (){
+        Route::get('/', [App\Http\Controllers\Admin\PagesController::class, 'index'])->name('admin.pages.index');
+        Route::get('/create', [App\Http\Controllers\Admin\PagesController::class, 'create'])->name('admin.pages.create');
+        Route::get('/main_page/edit', [App\Http\Controllers\Admin\PagesController::class, 'main_page_edit'])->name('admin.pages.main_page_edit');
+        Route::patch('/main_page', [App\Http\Controllers\Admin\PagesController::class, 'main_page_update'])->name('admin.pages.main_page_update');
+
+    });
+
 });
 
 
