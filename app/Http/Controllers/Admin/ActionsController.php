@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Actions\ActionImagesStoreRequest;
+use App\Http\Requests\Admin\Actions\ActionImagesUpdateRequest;
+use App\Http\Requests\Admin\Actions\ActionsUpdateRequest;
 use App\Http\Requests\Admin\Actions\PageImagesStoreRequest;
 use App\Http\Requests\Admin\Actions\PageImagesUpdateRequest;
 use App\Http\Requests\Admin\Actions\ActionsStoreRequest;
@@ -32,7 +35,7 @@ class ActionsController extends Controller
         return view('admin.actions.create');
     }
 
-    public function store(ActionsStoreRequest $request, PageImagesStoreRequest $imgRequest)
+    public function store(ActionsStoreRequest $request, ActionImagesStoreRequest $imgRequest)
     {
         $data = $request->validated();
         $imgData = $imgRequest->validated();
@@ -71,11 +74,15 @@ class ActionsController extends Controller
         return view('admin.actions.edit', compact('action', 'image'));
     }
 
-    public function update(PagesUpdateRequest $request, PageImagesUpdateRequest $imgRequest, $id)
+    public function update(ActionsUpdateRequest $request, ActionImagesUpdateRequest $imgRequest, $id)
     {
         $data = $request->validated();
         $new_images = $imgRequest->validated();
         $action = Action::where('id', $id)->first();
+
+        if(!isset($data['status'])) {
+            $data['status'] = 'Не опубліковано';
+        }
 
         if (isset($new_images['image'])) {
             $updateImages = $new_images['image'];

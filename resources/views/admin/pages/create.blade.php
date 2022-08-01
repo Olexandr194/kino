@@ -4,9 +4,8 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <form action="{{ route('admin.pages.main_page_update') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.pages.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('PATCH')
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row">
@@ -38,45 +37,27 @@
                             <div class="form-group">
                                 <div class="d-flex">
                                     <div class="col-md-2">
-                                        <label>Номери телефону:</label>
+                                        <label>Назва сторінки:</label>
                                     </div>
-                                    <div class="col-9">
-                                    <div class="col-md-3 mr-5 mb-3">
-                                        <input type="text" class="form-control" name="phone1"
-                                               placeholder="Номер телефону"
-                                               value="{{ $main_page->phone1 }}">
-                                        @error('phone1')
+                                    <div class="col-md-4 mr-5">
+                                        <input type="text" class="form-control" name="title"
+                                               placeholder="Назва сторінки"
+                                               value="{{ old('title') }}">
+                                        @error('title')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
-                                    <div class="col-md-3 mr-5 mb-3">
-                                        <input type="text" class="form-control" name="phone2"
-                                               placeholder="Номер телефону"
-                                               value="{{ $main_page->phone2 }}">
-                                        @error('phone2')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-3 mr-5">
-                                        <input type="text" class="form-control" name="phone3"
-                                               placeholder="Номер телефону"
-                                               value="{{ $main_page->phone3 }}">
-                                        @error('phone3')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group mt-5">
                                 <div class="d-flex">
                                     <div class="col-md-2">
-                                        <label>SEO текст:</label>
+                                        <label>Опис:</label>
                                     </div>
                                     <div class="col-md-9">
                                             <textarea id="summernote"
-                                                      name="seo_text">{{ $main_page->seo_text }}</textarea>
-                                        @error('seo_text')
+                                                      name="description">{{ old('description') }}</textarea>
+                                        @error('description')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -84,6 +65,63 @@
                             </div>
 
                             {{--------------------------------------------------------------------------------------------------------------------------------------------}}
+
+                            <div class="form-group mt-5">
+                                <div class="d-flex">
+                                    <div class="col-md-2">
+                                        <label>Головне зображення</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>
+                                            <img id="mainImage" src="{{ asset('images/img_3.png') }}"
+                                                 class="add-img">
+                                        </label>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="file" id="main-btn" accept="image/*" name="main_image"
+                                               onchange="document.getElementById('mainImage').src = window.URL.createObjectURL(this.files[0])"
+                                               hidden/>
+                                        <label class="input" for="main-btn">Завантажити</label>
+
+                                    </div>
+                                    <div class="col-md-1 ml-3">
+                                        <label class="delete"
+                                               onclick="document.getElementById('mainImage').src = '{{ asset('images/img_3.png') }}'">Видалити</label>
+                                    </div>
+                                    @error('main_image')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            {{--------------------------------------------------------------------------------------------------------------------------------------------}}
+                            {{--------------------------------------------------------------------------------------------------------------------------------------------}}
+
+                            <div class="form-group mt-5">
+                                <div class="d-flex">
+                                    <div class="col-md-2">
+                                        <label>Галерея зображень</label>
+                                    </div>
+                                    @for ($i = 0; $i < 5; $i++)
+                                        <div class="col-md-2">
+                                            <label>
+                                                <span class="close"
+                                                      onclick="document.getElementById('image{{$i}}').src = '{{ asset('images/img_3.png') }}'"></span>
+                                                <img id="image{{$i}}" src="{{ asset('images/img_3.png') }}"
+                                                     class="add-img">
+                                            </label>
+                                            <input type="file" id="img{{$i}}-btn" accept="image/*" name="image[]"
+                                                   onchange="document.getElementById('image{{$i}}').src = window.URL.createObjectURL(this.files[0])"
+                                                   hidden/>
+                                            <label class="input text-center" for="img{{$i}}-btn"
+                                                   style="width: 200px">Додати</label>
+                                            @error('image')
+                                            <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    @endfor
+                                </div>
+                            </div>
 
                             {{--------------------------------------------------------------------------------------------------------------------------------------------}}
 
@@ -97,7 +135,7 @@
                                             <label>URL:</label>
                                             <input type="text" class="form-control" name="seo_url"
                                                    placeholder="URL"
-                                                   value="{{ $main_page->seo_url }}">
+                                                   value="{{ old('seo_url') }}">
                                             @error('seo_url')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -106,7 +144,7 @@
                                             <label>Title:</label>
                                             <input type="text" class="form-control" name="seo_title"
                                                    placeholder="Title"
-                                                   value="{{ $main_page->seo_title }}">
+                                                   value="{{ old('seo_title') }}">
                                             @error('seo_title')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -115,7 +153,7 @@
                                             <label>Keywords:</label>
                                             <input type="text" class="form-control" name="seo_keywords"
                                                    placeholder="Keywords"
-                                                   value="{{ $main_page->seo_keywords }}">
+                                                   value="{{ old('seo_keywords') }}">
                                             @error('seo_keywords')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -124,7 +162,7 @@
                                             <label>Description:</label>
                                             <input type="text" class="form-control" name="seo_description"
                                                    placeholder="Description"
-                                                   value="{{ $main_page->seo_description }}">
+                                                   value="{{ old('seo_description') }}">
                                             @error('seo_description')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -168,10 +206,51 @@
             margin-top: 1rem;
         }
 
+        .add-img {
+            height: 150px;
+            width: 200px;
+        }
+
+        .close {
+            position: absolute;
+            right: 35px;
+            top: -15px;
+            width: 32px;
+            height: 32px;
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            opacity: 1;
+        }
+
+        .close:before, .close:after {
+            position: absolute;
+            left: 15px;
+            content: ' ';
+            height: 33px;
+            width: 2px;
+            color: red;
+            background-color: red;
+        }
+
+        .close:before {
+            transform: rotate(45deg);
+        }
+
+        .close:after {
+            transform: rotate(-45deg);
+        }
     </style>
 
     <script>
-
+        $(function () {
+            $('#datetimepicker4').datetimepicker({
+                format: 'L',
+                locale: 'ua'
+            });
+        });
     </script>
 
 @endsection

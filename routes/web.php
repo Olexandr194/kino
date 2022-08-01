@@ -55,9 +55,18 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
     Route::group(['namespace' => 'Pages', 'prefix' => 'pages'], function (){
         Route::get('/', [App\Http\Controllers\Admin\PagesController::class, 'index'])->name('admin.pages.index');
         Route::get('/create', [App\Http\Controllers\Admin\PagesController::class, 'create'])->name('admin.pages.create');
+        Route::post('/', [App\Http\Controllers\Admin\PagesController::class, 'store'])->name('admin.pages.store');
         Route::get('/main_page/edit', [App\Http\Controllers\Admin\PagesController::class, 'main_page_edit'])->name('admin.pages.main_page_edit');
         Route::patch('/main_page', [App\Http\Controllers\Admin\PagesController::class, 'main_page_update'])->name('admin.pages.main_page_update');
-
+        Route::get('/{page}/edit', [App\Http\Controllers\Admin\PagesController::class, 'edit'])->name('admin.pages.edit');
+        Route::patch('/{page}', [App\Http\Controllers\Admin\PagesController::class, 'update'])->name('admin.pages.update');
+        Route::get('/contact_page', [App\Http\Controllers\Admin\PagesController::class, 'contact_page_index'])->name('admin.pages.contact_page_index');
+        Route::get('/contact_page/create', [App\Http\Controllers\Admin\PagesController::class, 'contact_page_create'])->name('admin.pages.contact_page_create');
+        Route::post('/contact_page/', [App\Http\Controllers\Admin\PagesController::class, 'contact_page_store'])->name('admin.pages.contact_page_store');
+        Route::get('/contact_page/{contact_page}/edit', [App\Http\Controllers\Admin\PagesController::class, 'contact_page_edit'])->name('admin.pages.contact_page_edit');
+        Route::patch('/contact_page/{contact_page}', [App\Http\Controllers\Admin\PagesController::class, 'contact_page_update'])->name('admin.pages.contact_page_update');
+        Route::post('/contact_page/delete', [App\Http\Controllers\Admin\PagesController::class, 'destroy_contact_page'])->name('admin.pages.destroy_contact_page');
+        Route::post('/page/delete', [App\Http\Controllers\Admin\PagesController::class, 'destroy_page'])->name('admin.pages.destroy');
     });
 
 });

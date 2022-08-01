@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="col-md-11">
-                    <div class="ajax-actions mt-5">
+                    <div class="ajax-page mt-5">
                         <table class="table table-bordered">
                             <thead class="col-md-3">
                             <tr>
@@ -55,7 +55,7 @@
                             </tr>
                             </thead>
                             <tbody class="col-md-7">
-                                <tr class="action text-center">
+                            <tr class="action text-center">
                                 <td class="">Головна сторінка</td>
                                 <td>{{ $main_page->created_at }}</td>
                                 <td>{{ $main_page->status }}</td>
@@ -68,23 +68,48 @@
                                             class="fas fa-pencil-alt text-dark"></i></a>
                                 </td>
                             </tr>
-                        {{--    @foreach($actions as $item)
-                                <tr class="action text-center">
-                                    <td class="">{{ $item->title }}</td>
-                                    <td>{{ $item->created_at }}</td>
-                                    <td>{{ $item->status }}</td>
+                            @for($i = 0; $i<5; $i++))
+                                        <tr class="action text-center">
+                                    <td class="">{{ $pages[$i]->title }}</td>
+                                    <td>{{ $pages[$i]->created_at }}</td>
+                                    <td>{{ $pages[$i]->status }}</td>
                                     <input type="hidden" class="action_id"
-                                           value="{{ $item->id }}">
+                                           value="{{ $pages[$i]->id }}">
 
                                     <td class="border-transparent col-md-1 text-left">
                                         <a class="ml-4"
-                                           href="{{ route('admin.actions.edit', $item->id) }}"><i
+                                           href="{{ route('admin.pages.edit', $pages[$i]->id) }}"><i
                                                 class="fas fa-pencil-alt text-dark"></i></a>
-                                        <div class="delete-action fas fa-trash text-dark ml-3"
-                                             style="cursor: pointer"></div>
                                     </td>
                                 </tr>
-                            @endforeach--}}
+                            @endfor
+                            <tr class="action text-center">
+                                <td class="">Контакти</td>
+                                <td>{{ $contact_page->created_at }}</td>
+                                <td>Опубліковано</td>
+                                <td class="border-transparent col-md-1 text-left">
+                                    <a class="ml-4"
+                                       href="{{ route('admin.pages.contact_page_index') }}"><i
+                                            class="fas fa-pencil-alt text-dark"></i></a>
+                                </td>
+                            </tr>
+                            @for($i = 5; $i<count($pages); $i++)
+                            <tr class="page text-center">
+                                <td class="">{{ $pages[$i]->title }}</td>
+                                <td>{{ $pages[$i]->created_at }}</td>
+                                <td>{{ $pages[$i]->status }}</td>
+                                <input type="hidden" class="page_id"
+                                       value="{{ $pages[$i]->id }}">
+
+                                <td class="border-transparent col-md-1 text-left">
+                                    <a class="ml-4"
+                                       href="{{ route('admin.pages.edit', $pages[$i]->id) }}"><i
+                                            class="fas fa-pencil-alt text-dark"></i></a>
+                                    <div class="delete-page fas fa-trash text-dark ml-3"
+                                         style="cursor: pointer"></div>
+                                </td>
+                            </tr>
+                            @endfor
                             </tbody>
                         </table>
                     </div>
@@ -101,20 +126,20 @@
     </style>
     <script>
         $(function () {
-            $(document).on('click', '.delete-action', function (event) {
+            $(document).on('click', '.delete-page', function (event) {
                 event.preventDefault();
-                let action_id = $(this).closest('.action').find('.action_id').val();
+                let page_id = $(this).closest('.page').find('.page_id').val();
                 $.ajax({
-                    url: "{{ route('admin.actions.destroy_action') }}",
+                    url: "{{ route('admin.pages.destroy') }}",
                     type: "POST",
                     data: {
-                        'id': action_id,
+                        'id': page_id,
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: (data) => {
-                        $('.ajax-actions').html(data);
+                        $('.ajax-page').html(data);
                     },
                     error: (data) => {
                         console.log(data)

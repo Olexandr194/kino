@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin\Pages;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PagesUpdateRequest extends FormRequest
+class ContactsPageUpdateRequest extends FormRequest
 {
     public function authorize()
     {
@@ -16,14 +16,15 @@ class PagesUpdateRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'description' => 'required',
-            'main_image' => 'nullable|file',
+            'address' => 'required',
+            'logo' => 'nullable',
+            'main' => 'nullable',
             'status' => 'nullable',
+            'coordinates' => 'required',
             'seo_url' => 'nullable',
             'seo_title' => 'nullable',
             'seo_keywords' => 'nullable',
             'seo_description' => 'nullable',
-            'page_id' => 'nullable',
         ];
     }
 }

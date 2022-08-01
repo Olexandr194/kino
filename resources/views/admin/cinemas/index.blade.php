@@ -20,9 +20,9 @@
 
             <div class="form-group mt-5">
                 <div class="ajax-cinemas">
-                    <div class="d-flex">
+                    <div class="row col-11 ml-5">
                         @if(count($cinemas) >= 1)
-                            <div class="col-md-2 mr-4">
+                            <div class="col-md-2 text-center ml-3 mr-3 mt-3 ajax-cinema">
                                 <figure>
                                     <p><a href="{{ route('admin.cinemas.show', $cinemas[0]->id) }}" class="">
                                             <img src="{{ url('storage/' . $cinemas[0]->logo_image) }}"
@@ -32,7 +32,7 @@
                                 </figure>
                             </div>
                             @for($i=1; $i<count($cinemas); $i++)
-                            <div class="col-md-2 mr-4">
+                                <div class="col-md-2 text-center ml-3 mr-3 mt-3 ajax-cinema">
                                 <span class="close"><img class="delete-cinema"
                                                          src="{{ asset('images/close1.png') }}"></span>
                                 <input type="hidden" class="cinema_id" value="{{ $cinemas[$i]->id }}">
@@ -46,7 +46,7 @@
                             </div>
                             @endfor
                         @endif
-                        <div class="col-md-2">
+                            <div class="col-md-2 text-center ml-3 mr-3 mt-3">
                             <figure>
                                 <p><a href="{{ route('admin.cinemas.create') }}" class="">
                                         <img src="{{ asset('images/img_1.png') }}" class="w-100 add-img">
@@ -88,7 +88,7 @@
         $(function () {
             $(document).on('click', '.delete-cinema', function (event) {
                 event.preventDefault();
-                let cinema_id = $(this).closest('.ajax-cinemas').find('.cinema_id').val();
+                let cinema_id = $(this).closest('.ajax-cinema').find('.cinema_id').val();
                 $.ajax({
                     url: "{{ route('admin.cinemas.destroy_cinema') }}",
                     type: "POST",

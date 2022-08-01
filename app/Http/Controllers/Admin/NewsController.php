@@ -71,6 +71,10 @@ class NewsController extends Controller
         $new_images = $imgRequest->validated();
         $news = News::where('id', $id)->first();
 
+        if(!isset($data['status'])) {
+            $data['status'] = 'Не опубліковано';
+        }
+
         if (isset($new_images['image'])) {
             $updateImages = $new_images['image'];
             unset($new_images['image']);

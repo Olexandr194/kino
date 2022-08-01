@@ -3,21 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Actions\PageImagesStoreRequest;
-use App\Http\Requests\Admin\Actions\PageImagesUpdateRequest;
-use App\Http\Requests\Admin\Actions\ActionsStoreRequest;
-use App\Http\Requests\Admin\Actions\PagesUpdateRequest;
-use App\Http\Requests\Admin\News\NewsImagesStoreRequest;
-use App\Http\Requests\Admin\News\NewsImagesUpdateRequest;
-use App\Http\Requests\Admin\News\NewsStoreRequest;
-use App\Http\Requests\Admin\News\NewsUpdateRequest;
-use App\Http\Requests\Admin\Pages\MainPageStoreRequest;
+use App\Http\Requests\Admin\Pages\ContactsPageStoreRequest;
+use App\Http\Requests\Admin\Pages\ContactsPageUpdateRequest;
 use App\Http\Requests\Admin\Pages\MainPageUpdateRequest;
-use App\Models\Action;
-use App\Models\ActionImages;
-use App\Models\MainPage;
-use App\Models\News;
-use App\Models\NewsImages;
+use App\Http\Requests\Admin\Pages\PageImagesStoreRequest;
+use App\Http\Requests\Admin\Pages\PageImagesUpdateRequest;
+use App\Http\Requests\Admin\Pages\PagesStoreRequest;
+use App\Http\Requests\Admin\Pages\PagesUpdateRequest;
+use App\Models\Cinema;use App\Models\ContactPage;use App\Models\MainPage;
+use App\Models\Page;
+use App\Models\PageImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,8 +21,10 @@ class PagesController extends Controller
 
     public function index()
     {
+        $pages = Page::all();
         $main_page = MainPage::where('id', 1)->first();
-        return view('admin.pages.index', compact('main_page'));
+        $contact_page = ContactPage::orderBy('created_at', 'DESC')->first();
+        return view('admin.pages.index', compact('main_page', 'pages', 'contact_page'));
     }
 
     public function main_page_edit()
@@ -50,10 +47,10 @@ class PagesController extends Controller
 
     public function create()
     {
-        return view('admin.actions.create');
+        return view('admin.pages.create');
     }
 
-    public function store(ActionsStoreRequest $request, PageImagesStoreRequest $imgRequest)
+    public function store(PagesStoreRequest $request, PageImagesStoreRequest $imgRequest)
     {
         $data = $request->validated();
         $imgData = $imgRequest->validated();
@@ -68,35 +65,39 @@ class PagesController extends Controller
         }
 
         $data['main_image'] = Storage::disk('public')->put('/images', $data['main_image']);
-        $action = Action::firstOrCreate($data);
+        $page = Page::firstOrCreate($data);
 
         if (isset($images)) {
             foreach ($images as $image) {
                 $image = Storage::disk('public')->put('/images', $image);
-                $action_images = new ActionImages();
-                $action_images->image = $image;
-                $action_images->action_id = $action->id;
-                $action_images->save();
+                $page_images = new PageImages();
+                $page_images->image = $image;
+                $page_images->page_id = $page->id;
+                $page_images->save();
             }
         }
-        return redirect()->route('admin.actions.index');
+        return redirect()->route('admin.pages.index');
     }
 
-    public function edit(Action $action)
+    public function edit(Page $page)
     {
-        $images = ActionImages::all()->where('action_id', $action->id);
+        $images = PageImages::all()->where('page_id', $page->id);
         foreach ($images as $item) {
             $image[] = $item->image;
         }
 
-        return view('admin.actions.edit', compact('action', 'image'));
+        return view('admin.pages.edit', compact('page', 'image'));
     }
 
     public function update(PagesUpdateRequest $request, PageImagesUpdateRequest $imgRequest, $id)
     {
         $data = $request->validated();
         $new_images = $imgRequest->validated();
-        $action = Action::where('id', $id)->first();
+        $page = Page::where('id', $id)->first();
+
+        if(!isset($data['status'])) {
+            $data['status'] = 'Не опубліковано';
+        }
 
         if (isset($new_images['image'])) {
             $updateImages = $new_images['image'];
@@ -106,36 +107,101 @@ class PagesController extends Controller
         if (isset ($data['main_image'])) {
             $data['main_image'] = Storage::disk('public')->put('/images', $data['main_image']);
         } else {
-            $data['main_image'] = $action['main_image'];
+            $data['main_image'] = $page['main_image'];
         }
-        $action->update($data);
+        $page->update($data);
 
         if (isset($updateImages)) {
             foreach ($updateImages as $image) {
                 $image = Storage::disk('public')->put('/images', $image);
-                $action_image = new ActionImages();
-                $action_image->image = $image;
-                $action_image->action_id = $action->id;
-                $action_image->save();
+                $page_images = new PageImages();
+                $page_images->image = $image;
+                $page_images->page_id = $page->id;
+                $page_images->save();
             }
         }
-        return redirect()->route('admin.actions.index');
+        return redirect()->route('admin.pages.index');
     }
 
-    public function destroy_action(Request $request)
+    public function contact_page_index()
+    {
+        $contacts = ContactPage::all();
+        return view('admin.pages.contacts_page_index', compact('contacts'));
+    }
+
+    public function contact_page_create()
+    {
+
+        return view('admin.pages.contacts_page_create');
+    }
+
+    public function contact_page_store(ContactsPageStoreRequest $request)
+    {
+        $data = $request->validated();
+        $data['logo'] = Storage::disk('public')->put('/images', $data['logo']);
+        $data['main'] = Storage::disk('public')->put('/images', $data['main']);
+        $contact = ContactPage::firstOrCreate($data);
+
+        return redirect()->route('admin.pages.contact_page_index');
+    }
+
+    public function contact_page_edit(ContactPage $contactPage)
+    {
+        return view('admin.pages.contacts_page_edit', compact('contactPage'));
+    }
+
+    public function contact_page_update(ContactsPageUpdateRequest $request, $id)
+    {
+        $data = $request->validated();
+        $contact_page = ContactPage::where('id', $id)->first();
+
+        if (isset ($data['logo'])) {
+            $data['logo'] = Storage::disk('public')->put('/images', $data['logo']);
+        } else {
+            $data['logo'] = $contact_page['logo'];
+        }
+        if (isset ($data['main'])) {
+            $data['main'] = Storage::disk('public')->put('/images', $data['main']);
+        } else {
+            $data['main'] = $contact_page['main'];
+        }
+        $contact_page->update($data);
+
+        return redirect()->route('admin.pages.contact_page_index');
+    }
+
+    public function destroy_contact_page(Request $request)
     {
         $id = $request->input('id');
 
-        if (Action::where('id', $id)->exists()) {
-            $action = Action::where('id', $id)->first();
-            $action->delete();
+        if (ContactPage::where('id', $id)->exists()) {
+            $page = ContactPage::where('id', $id)->first();
+            $page->delete();
         }
-        $actions = Action::orderBy('created_at', 'DESC')->get();
+        $contacts = ContactPage::all();
 
         if ($request->ajax()) {
-            return view('admin.ajax.delete_action', compact('actions'))->render();
+            return view('admin.ajax.contact_page', compact('contacts'))->render();
         }
-        return view('admin.actions.index', compact('actions'));
+        return redirect()->route('admin.pages.contact_page_index');
+    }
+
+    public function destroy_page(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (Page::where('id', $id)->exists()) {
+            $page = Page::where('id', $id)->first();
+            $page->delete();
+        }
+        $pages = Page::all();
+        $main_page = MainPage::where('id', 1)->first();
+        $contact_page = ContactPage::orderBy('created_at', 'DESC')->first();
+
+        if ($request->ajax()) {
+            return view('admin.ajax.delete_page', compact('pages', 'main_page', 'contact_page'))->render();
+        }
+        return view('admin.pages.index', compact('pages'));
     }
 
 }

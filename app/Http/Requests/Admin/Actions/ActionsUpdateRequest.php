@@ -25,7 +25,7 @@ class ActionsUpdateRequest extends FormRequest
             'seo_title' => 'nullable',
             'seo_keywords' => 'nullable',
             'seo_description' => 'nullable',
-            'news_id' => 'nullable',
+            'action_id' => 'nullable',
         ];
     }
 }

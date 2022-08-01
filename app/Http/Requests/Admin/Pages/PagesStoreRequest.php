@@ -18,11 +18,12 @@ class PagesStoreRequest extends FormRequest
             'title' => 'required',
             'description' => 'required',
             'main_image' => 'required|file',
+            'status' => 'nullable',
             'seo_url' => 'nullable',
             'seo_title' => 'nullable',
             'seo_keywords' => 'nullable',
             'seo_description' => 'nullable',
-            'news_id' => 'nullable',
+            'page_id' => 'nullable',
         ];
     }
 }
