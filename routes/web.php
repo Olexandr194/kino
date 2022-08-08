@@ -68,6 +68,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
         Route::post('/contact_page/delete', [App\Http\Controllers\Admin\PagesController::class, 'destroy_contact_page'])->name('admin.pages.destroy_contact_page');
         Route::post('/page/delete', [App\Http\Controllers\Admin\PagesController::class, 'destroy_page'])->name('admin.pages.destroy');
     });
+
     Route::group(['namespace' => 'Banners', 'prefix' => 'banners'], function (){
         Route::get('/', [App\Http\Controllers\Admin\BannersController::class, 'index'])->name('admin.banners.index');
         Route::patch('/', [App\Http\Controllers\Admin\BannersController::class, 'top_update'])->name('admin.banners.top_update');
@@ -75,6 +76,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
         Route::patch('/bottom', [App\Http\Controllers\Admin\BannersController::class, 'bottom_update'])->name('admin.banners.bottom_update');
         Route::post('/bottom/delete', [App\Http\Controllers\Admin\BannersController::class, 'destroy_bottom_banner'])->name('admin.banners.destroy_bottom_banner');
         Route::patch('/main', [App\Http\Controllers\Admin\BannersController::class, 'main_update'])->name('admin.banners.main_update');
+    });
+
+    Route::group(['namespace' => 'Users', 'prefix' => 'users'], function (){
+        Route::get('/', [App\Http\Controllers\Admin\UsersController::class, 'index'])->name('admin.users.index');
+        Route::get('/search', [App\Http\Controllers\Admin\UsersController::class, 'search'])->name('admin.users.search');
+        Route::get('/{users}/edit', [App\Http\Controllers\Admin\UsersController::class, 'edit'])->name('admin.users.edit');
+        Route::patch('/{users}', [App\Http\Controllers\Admin\UsersController::class, 'update'])->name('admin.users.update');
+        Route::post('/user/delete', [App\Http\Controllers\Admin\UsersController::class, 'destroy_user'])->name('admin.users.destroy_user');
     });
 
 });
