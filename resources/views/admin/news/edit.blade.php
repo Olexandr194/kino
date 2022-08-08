@@ -12,8 +12,13 @@
                     <div class="row">
                         <div class="col-md-10 text-right">
                             <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                @if ($news->status == 'Опубліковано')
                                 <input type="checkbox" name="status" class="custom-control-input" id="customSwitch3"
-                                       value="Опубліковано">
+                                       value="Опубліковано" checked>
+                                @else
+                                    <input type="checkbox" name="status" class="custom-control-input" id="customSwitch3"
+                                           value="Опубліковано">
+                                @endif
                                 @error('status')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror

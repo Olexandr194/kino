@@ -68,7 +68,7 @@
                                             class="fas fa-pencil-alt text-dark"></i></a>
                                 </td>
                             </tr>
-                            @for($i = 0; $i<5; $i++))
+                            @for($i = 0; $i<5; $i++)
                                         <tr class="action text-center">
                                     <td class="">{{ $pages[$i]->title }}</td>
                                     <td>{{ $pages[$i]->created_at }}</td>
