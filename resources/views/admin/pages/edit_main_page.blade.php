@@ -12,8 +12,13 @@
                     <div class="row">
                         <div class="col-md-10 text-right">
                             <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                <input type="checkbox" name="status" class="custom-control-input" id="customSwitch3"
-                                       value="Опубліковано">
+                                @if ($main_page->status == 'Опубліковано')
+                                    <input type="checkbox" name="status" class="custom-control-input" id="customSwitch3"
+                                           value="Опубліковано" checked>
+                                @else
+                                    <input type="checkbox" name="status" class="custom-control-input" id="customSwitch3"
+                                           value="Опубліковано">
+                                @endif
                                 <label class="custom-control-label" for="customSwitch3">Активувати</label>
                             </div>
                         </div><!-- /.col -->

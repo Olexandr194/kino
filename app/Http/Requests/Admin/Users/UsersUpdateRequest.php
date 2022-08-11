@@ -15,20 +15,20 @@ class UsersUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'surname' => 'required',
-            'nickname' => 'required',
-            'address' => 'required',
-            'email' => 'required|string|email|unique:users,email,' . $this->user_id,
-            'user_id' => 'required|integer|exists:users,id',
-            'password' => 'required',
+            'name' => 'nullable',
+            'surname' => 'nullable',
+            'nickname' => 'nullable',
+            'address' => 'nullable',
+            'email' => 'nullable|string|email|unique:users,email,' . $this->user_id,
+            'user_id' => 'nullable|integer|exists:users,id',
+            'password' => 'nullable',
             'card_number' => 'nullable',
-            'language' => 'required',
-            'sex' => 'required',
+            'language' => 'nullable',
+            'sex' => 'nullable',
             'phone' => 'nullable',
             'birthday' => 'nullable',
             'city' => 'nullable',
-            'role' => 'required',
+            'role' => 'nullable',
         ];
     }
 }

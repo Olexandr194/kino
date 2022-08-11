@@ -3,7 +3,14 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'Main'], function (){
-    Route::get('/', function () { return view('welcome');});
+    Route::get('/', [App\Http\Controllers\Main\MainPageController::class, 'index'])->name('main.main_page');
+    Route::get('/poster', [App\Http\Controllers\Main\MainPageController::class, 'poster'])->name('main.poster');
+    Route::get('/soon', [App\Http\Controllers\Main\MainPageController::class, 'soon'])->name('main.soon');
+});
+
+Route::group(['namespace' => 'Personal'], function (){
+    Route::get('/personal', [App\Http\Controllers\Main\PersonalController::class, 'index'])->name('personal.index');
+    Route::patch('/personal/{personal}', [App\Http\Controllers\Main\PersonalController::class, 'update'])->name('personal.update');
 });
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
@@ -87,6 +94,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
     });
 
 });
+
+
+Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
 
 \Illuminate\Support\Facades\Auth::routes();
