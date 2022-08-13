@@ -18,7 +18,8 @@
                 <button class="btn btn-dark mb-3" style="background: #fd7605">
                     <a class="nav-link" href="{{ route('main.soon') }}"><h2 class="text-white">Скоро</h2></a>
                 </button>
-                <img class="h-100" src="{{ 'images/add1.jpeg' }}">
+                <img class="h-100" src="{{ 'images/add2.jpg' }}">
+                <img class="h-100" src="{{ 'images/add3.jpg' }}">
             </div>
         </div>
         <div class="col-lg-9 stretch-card grid-margin" >

@@ -18,7 +18,8 @@
                 <button class="btn btn-dark mb-3" style="background: #fd9137">
                     <h2>Скоро</h2>
                 </button>
-                <img class="h-100" src="{{ 'images/add1.jpeg' }}">
+                <img class="h-100" src="{{ 'images/add2.jpg' }}">
+                <img class="h-100" src="{{ 'images/add3.jpg' }}">
             </div>
         </div>
         <div class="col-lg-9 stretch-card grid-margin" >

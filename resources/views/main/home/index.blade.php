@@ -84,7 +84,7 @@
         @endforeach
     </div>
 
-    <h1 class="text-center">Новини та акції</h1>
+    <h1 class="text-center" style="color: #fd7605">Новини та акції</h1>
     <div class="img-thumbnail"  style="margin-left: 200px; width: 1395px">
         <div id="carouselBasicExample2" class="carousel slide carousel-fade" data-mdb-ride="carousel" style="width: 1385px">
             <!-- Indicators -->

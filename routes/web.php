@@ -93,10 +93,18 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
         Route::post('/user/delete', [App\Http\Controllers\Admin\UsersController::class, 'destroy_user'])->name('admin.users.destroy_user');
     });
 
+    Route::group(['namespace' => 'Schedules', 'prefix' => 'schedules'], function (){
+        Route::get('/', [App\Http\Controllers\Admin\ScheduleController::class, 'index'])->name('admin.schedules.index');
+        Route::get('/create', [App\Http\Controllers\Admin\ScheduleController::class, 'create'])->name('admin.schedules.create');
+        Route::get('/search', [App\Http\Controllers\Admin\ScheduleController::class, 'cinema_search'])->name('admin.schedules.cinema_search');
+        Route::post('/', [App\Http\Controllers\Admin\ScheduleController::class, 'store'])->name('admin.schedules.store');
+
+    });
+
 });
 
 
-Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
+    Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
 
 \Illuminate\Support\Facades\Auth::routes();

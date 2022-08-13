@@ -25,7 +25,7 @@
                             <div class="col-md-2 text-center ml-3 mr-3 mt-3 ajax-cinema">
                                 <figure>
                                     <p><a href="{{ route('admin.cinemas.show', $cinemas[0]->id) }}" class="">
-                                            <img src="{{ url('storage/' . $cinemas[0]->logo_image) }}"
+                                            <img src="{{ url('storage/' . $cinemas[0]->main_image) }}"
                                                  class="w-100 add-img">
                                         </a>
                                     <figcaption class="text-center"><h3>{{ $cinemas[0]->title }}</h3></figcaption>
@@ -38,7 +38,7 @@
                                 <input type="hidden" class="cinema_id" value="{{ $cinemas[$i]->id }}">
                                 <figure>
                                     <p><a href="{{ route('admin.cinemas.show', $cinemas[$i]->id) }}" class="">
-                                            <img src="{{ url('storage/' . $cinemas[$i]->logo_image) }}"
+                                            <img src="{{ url('storage/' . $cinemas[$i]->main_image) }}"
                                                  class="w-100 add-img">
                                         </a>
                                     <figcaption class="text-center"><h3>{{ $cinemas[$i]->title }}</h3></figcaption>
