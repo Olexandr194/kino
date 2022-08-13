@@ -4,7 +4,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <form action="№" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.schedules.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="content-header">
                 <div class="container-fluid">
@@ -35,14 +35,18 @@
                                     <select name="cinema_id" id="cinema_search" class="form-control col-md-12">
                                         <option value="">Оберіть кінотеатр</option>
                                         @foreach($cinemas as $cinema)
-                                        <option value="{{ $cinema->id }}"{{old('cinema_id') ? ' selected' : '' }}>{{ $cinema->title }}</option>
+                                        <option value="{{ $cinema->id }}">{{ $cinema->title }}</option>
                                         @endforeach
                                     </select>
                                 </div>
+                                @error('cinema_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group w-25 d-flex">
                                     <label class="col-md-5 mt-1">Зал</label>
                                     <select name="cinema_hall_id" class="form-control col-md-12 cinema_halls">
                                         @if (isset($cinema_halls))
+                                            <option value="">Оберіть кінозал</option>
                                             @foreach($cinema_halls as $cinema_hall)
                                                 <option value="{{ $cinema_hall->id }}">Кінозал №{{ $cinema_hall->number }}</option>
                                             @endforeach
@@ -51,6 +55,9 @@
                                         @endif
                                     </select>
                                 </div>
+                                @error('cinema_hall_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group w-25 d-flex">
                                     <label class="col-md-5 mt-1">Фільм</label>
                                     <select name="movie_id" class="form-control col-md-12">
@@ -60,6 +67,9 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                @error('movie_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group w-25 d-flex">
                                     <label class="col-md-5 mt-1">Формат</label>
                                     <select name="type" class="form-control col-md-12">
@@ -68,23 +78,35 @@
                                         <option value="IMAX"{{old('type') ? ' selected' : '' }}>IMAX</option>
                                     </select>
                                 </div>
+                                @error('type')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group w-50 d-flex">
                                     <label class="col-md-2 mt-1" style="margin-right: 33px">Дата</label>
                                     <div class="input-group date" style="width: 394px" id="datetimepicker14" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker14"/>
+                                        <input name="date" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker14"/>
                                         <div class="input-group-append" data-target="#datetimepicker14" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
                                 </div>
+                                @error('date')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group w-25 d-flex">
                                     <label class="col-md-5 mt-1">Час</label>
-                                        <input type="time" class="form-control col-md-12"/>
+                                        <input name="time" type="time" class="form-control col-md-12"/>
                                 </div>
+                                @error('time')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group w-25 d-flex">
                                     <label class="col-md-5 mt-1">Вартість</label>
-                                    <input type="number" class="form-control col-md-12"/>
+                                    <input name="cost" type="number" class="form-control col-md-12"/>
                                 </div>
+                                @error('cost')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             {{--------------------------------------------------------------------------------------------------------------------------------------------}}
 

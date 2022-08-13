@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\News;
+namespace App\Http\Requests\Admin\Schedules;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NewsStoreRequest extends FormRequest
+class ScheduleStoreRequest extends FormRequest
 {
     public function authorize()
     {
@@ -15,17 +15,14 @@ class NewsStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'description' => 'required',
-            'main_image' => 'required|file',
-            'link' => 'required|url',
-            'status' => 'nullable',
+            'type' => 'required',
             'date' => 'required',
-            'seo_url' => 'nullable',
-            'seo_title' => 'nullable',
-            'seo_keywords' => 'nullable',
-            'seo_description' => 'nullable',
-            'news_id' => 'nullable',
+            'time' => 'required',
+            'new_date' => 'nullable',
+            'cost' => 'required',
+            'cinema_id' => 'required',
+            'movie_id' => 'required',
+            'cinema_hall_id' => 'required',
         ];
     }
 }

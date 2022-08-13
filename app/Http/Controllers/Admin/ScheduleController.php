@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 
+use App\Http\Requests\Admin\Schedules\ScheduleStoreRequest;
 use App\Models\Cinema;
 use App\Models\CinemaHall;
 use App\Models\Movie;
+use App\Models\ScheduleModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,7 +18,9 @@ class ScheduleController extends Controller
     public function index()
     {
         $cinemas = Cinema::all();
-        return view('admin.schedules.index', compact('cinemas'));
+        $schedules = ScheduleModel::all();
+
+        return view('admin.schedules.index', compact('cinemas', 'schedules'));
     }
 
     public function create()
@@ -37,13 +41,18 @@ class ScheduleController extends Controller
         return view('admin.schedules.create', compact('cinema_halls'));
     }
 
-    public function store(ActionsStoreRequest $request, ActionImagesStoreRequest $imgRequest)
+    public function store(ScheduleStoreRequest $request)
     {
         $data = $request->validated();
+        $dates = explode(',', $data['date']);
 
-        $action = Action::firstOrCreate($data);
+        foreach ($dates as $date)
+        {
+            $data['date'] = date( "Y-m-d", strtotime( $date ) );
+            $schedule = ScheduleModel::firstOrCreate($data);
+        }
 
-        return redirect()->route('admin.actions.index');
+        return redirect()->route('admin.schedules.index');
     }
 
 

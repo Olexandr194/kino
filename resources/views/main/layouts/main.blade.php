@@ -6,7 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>@yield('title')</title>
     <!-- MDB icon -->
-    <link rel="icon" href="{{--{{ asset('images/img.png') }}--}}" type="image/x-icon" />
+    <link rel="icon" href="{{ asset('images/promin_logo.svg') }}" type="image/x-icon" />
     <!-- Font Awesome -->
     <link
         rel="stylesheet"
@@ -25,7 +25,7 @@
     <nav class="navbar navbar-light bg-light" style="height: 100px">
         <div class="container-fluid" style="margin-right: 200px">
             <ul class="navbar-top-left-menu" style="margin-left: 200px">
-                <a class="navbar-brand" href="{{ route('main.main_page') }}"><img class="w-100" src="/images/img.png" alt="" style="height: 80px; width: 200px"/></a>
+                <a class="navbar-brand" href="{{ route('main.main_page') }}"><img class="w-100" src="/images/promin_logo.svg" alt="" style="height: 80px; width: 200px"/></a>
             </ul>
             <form class="d-flex input-group w-auto">
                 <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
