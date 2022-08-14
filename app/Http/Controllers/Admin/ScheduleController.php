@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\Admin\Schedules\ScheduleStoreRequest;
+use App\Http\Requests\Admin\Schedules\ScheduleUpdateRequest;
 use App\Models\Cinema;
 use App\Models\CinemaHall;
 use App\Models\Movie;
@@ -103,67 +104,40 @@ class ScheduleController extends Controller
         return view('admin.schedules.create', compact('schedules'));
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function edit(Action $action)
+    public function edit(ScheduleModel $schedule)
     {
-        $images = ActionImages::all()->where('action_id', $action->id);
-        foreach ($images as $item) {
-            $image[] = $item->image;
-        }
-
-        return view('admin.actions.edit', compact('action', 'image'));
+        return view('admin.schedules.edit', compact('schedule'));
     }
 
-    public function update(ActionsUpdateRequest $request, ActionImagesUpdateRequest $imgRequest, $id)
+    public function update(ScheduleUpdateRequest $request, $id)
     {
         $data = $request->validated();
-        $new_images = $imgRequest->validated();
-        $action = Action::where('id', $id)->first();
+        $schedule = ScheduleModel::where('id', $id)->first();
+        $schedule->update($data);
 
-        if(!isset($data['status'])) {
-            $data['status'] = 'Не опубліковано';
-        }
-
-        if (isset($new_images['image'])) {
-            $updateImages = $new_images['image'];
-            unset($new_images['image']);
-        }
-
-        if (isset ($data['main_image'])) {
-            $data['main_image'] = Storage::disk('public')->put('/images', $data['main_image']);
-        } else {
-            $data['main_image'] = $action['main_image'];
-        }
-        $action->update($data);
-
-        if (isset($updateImages)) {
-            foreach ($updateImages as $image) {
-                $image = Storage::disk('public')->put('/images', $image);
-                $action_image = new ActionImages();
-                $action_image->image = $image;
-                $action_image->action_id = $action->id;
-                $action_image->save();
-            }
-        }
-        return redirect()->route('admin.actions.index');
+        return redirect()->route('admin.schedules.index');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
 
     public function destroy_action(Request $request)
     {
@@ -179,6 +153,6 @@ class ScheduleController extends Controller
             return view('admin.ajax.delete_action', compact('actions'))->render();
         }
         return view('admin.actions.index', compact('actions'));
-    }
+    }*/
 
 }

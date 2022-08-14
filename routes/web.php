@@ -102,6 +102,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
         Route::get('/hall_search', [App\Http\Controllers\Admin\ScheduleController::class, 'hall_search'])->name('admin.schedules.hall_search');
         Route::get('/date_search', [App\Http\Controllers\Admin\ScheduleController::class, 'date_search'])->name('admin.schedules.date_search');
         Route::get('/{schedule}/edit', [App\Http\Controllers\Admin\ScheduleController::class, 'edit'])->name('admin.schedules.edit');
+        Route::patch('/{schedule}', [App\Http\Controllers\Admin\ScheduleController::class, 'update'])->name('admin.schedules.update');
 
     });
 
