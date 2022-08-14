@@ -122,7 +122,7 @@
                                             </thead>
                                             <tbody class="schedules">
                                             @foreach($schedules as $schedule)
-                                            <tr class="odd text-center">
+                                            <tr class="odd text-center schedule">
                                                 <td class="dtr-control sorting_1" tabindex="0">{{ $schedule->date }}</td>
                                                 <td>{{ date('H:i', strtotime($schedule->time)) }}</td>
                                                 <td>{{ $schedule->movie->title }}</td>
@@ -132,8 +132,10 @@
                                                 <td><a class="ml-4"
                                                        href="{{ route('admin.schedules.edit', $schedule->id) }}"><i
                                                             class="fas fa-pencil-alt text-dark"></i></a>
-                                                    <div class="delete-user fas fa-trash text-dark ml-3"
+                                                    <div class="delete-schedule fas fa-trash text-dark ml-3"
                                                          style="cursor: pointer"></div></td>
+                                                <input type="hidden" class="schedule_id"
+                                                       value="{{ $schedule->id }}">
                                             </tr>
                                             @endforeach
                                             </tbody>
@@ -158,20 +160,20 @@
     </style>
     <script>
         $(function () {
-            $(document).on('click', '.delete-news', function (event) {
+            $(document).on('click', '.delete-schedule', function (event) {
                 event.preventDefault();
-                let news_id = $(this).closest('.news').find('.news_id').val();
+                let schedule_id = $(this).closest('.schedule').find('.schedule_id').val();
                 $.ajax({
-                    url: "{{ route('admin.news.destroy_news') }}",
+                    url: "{{ route('admin.schedules.destroy') }}",
                     type: "POST",
                     data: {
-                        'id': news_id,
+                        'id': schedule_id,
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: (data) => {
-                        $('.ajax-news').html(data);
+                        $('.schedules').html(data);
                     },
                     error: (data) => {
                         console.log(data)

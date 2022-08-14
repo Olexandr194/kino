@@ -118,41 +118,20 @@ class ScheduleController extends Controller
         return redirect()->route('admin.schedules.index');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
-
-    public function destroy_action(Request $request)
+    public function destroy(Request $request)
     {
         $id = $request->input('id');
 
-        if (Action::where('id', $id)->exists()) {
-            $action = Action::where('id', $id)->first();
-            $action->delete();
+        if (ScheduleModel::where('id', $id)->exists()) {
+            $schedule = ScheduleModel::where('id', $id)->first();
+            $schedule->delete();
         }
-        $actions = Action::orderBy('created_at', 'DESC')->get();
+        $schedules = ScheduleModel::all();
 
         if ($request->ajax()) {
-            return view('admin.ajax.delete_action', compact('actions'))->render();
+            return view('admin.schedules.ajax_schedules', compact('schedules'))->render();
         }
-        return view('admin.actions.index', compact('actions'));
-    }*/
+        return view('admin.schedules.index', compact('schedules'));
+    }
 
 }
