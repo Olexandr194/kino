@@ -98,6 +98,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
         Route::get('/create', [App\Http\Controllers\Admin\ScheduleController::class, 'create'])->name('admin.schedules.create');
         Route::get('/search', [App\Http\Controllers\Admin\ScheduleController::class, 'cinema_search'])->name('admin.schedules.cinema_search');
         Route::post('/', [App\Http\Controllers\Admin\ScheduleController::class, 'store'])->name('admin.schedules.store');
+        Route::get('/index_search', [App\Http\Controllers\Admin\ScheduleController::class, 'index_search'])->name('admin.schedules.index_search');
+        Route::get('/hall_search', [App\Http\Controllers\Admin\ScheduleController::class, 'hall_search'])->name('admin.schedules.hall_search');
+        Route::get('/date_search', [App\Http\Controllers\Admin\ScheduleController::class, 'date_search'])->name('admin.schedules.date_search');
+        Route::get('/{schedule}/edit', [App\Http\Controllers\Admin\ScheduleController::class, 'edit'])->name('admin.schedules.edit');
 
     });
 

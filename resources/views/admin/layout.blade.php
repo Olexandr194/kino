@@ -30,6 +30,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('custom_js')
+    <link rel="icon" href="{{ asset('images/promin_logo.svg') }}" type="image/x-icon" />
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

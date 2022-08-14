@@ -55,6 +55,54 @@ class ScheduleController extends Controller
         return redirect()->route('admin.schedules.index');
     }
 
+    public function index_search(Request $request)
+    {
+        if (isset($request->cinema_hall_id) and (isset($request->date)))
+        {
+            $schedules = ScheduleModel::where('cinema_id', $request->cinema_id)
+                ->where('cinema_hall_id', $request->cinema_hall_id)
+                ->where('date', $request->date)
+                ->get();
+        }
+        elseif (isset($request->cinema_hall_id))
+        {
+            $schedules = ScheduleModel::where('cinema_id', $request->cinema_id)
+                ->where('cinema_hall_id', $request->cinema_hall_id)
+                ->get();
+        }
+        else {
+            $schedules = ScheduleModel::where('cinema_id',$request->cinema_id)->get();
+            }
+
+        if ($request->ajax()) {
+            return view('admin.schedules.ajax_schedules', compact('schedules'))->render();
+        }
+
+        return view('admin.schedules.create', compact('schedules'));
+    }
+
+    public function hall_search(Request $request)
+    {
+        $cinema_halls = CinemaHall::where('cinema_id', $request->search)->get();
+
+        if ($request->ajax()) {
+            return view('admin.schedules.ajax_cinema_halls', compact('cinema_halls'))->render();
+        }
+
+        return view('admin.schedules.create', compact('cinema_halls'));
+    }
+
+    public function date_search(Request $request)
+    {
+        $schedules = ScheduleModel::where('cinema_hall_id', $request->cinema_hall_id)->get();
+
+        if ($request->ajax()) {
+            return view('admin.schedules.ajax_date', compact('schedules'))->render();
+        }
+
+        return view('admin.schedules.create', compact('schedules'));
+    }
+
 
 
 
