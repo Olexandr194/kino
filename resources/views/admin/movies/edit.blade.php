@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'Кінозал')
+@section('title', 'Фільми')
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -145,21 +145,21 @@
                                     <div class="col-1 md-2">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="type" value="2D"
-                                                   style="height: 25px; width: 25px;">
+                                                   style="height: 25px; width: 25px;" {{ $movie->type == '2D' ? ' checked' : '' }}>
                                             <label class="form-check-label ml-3 mt-1"><h5>2D</h5></label>
                                         </div>
                                     </div>
                                     <div class="col-1 md-2">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="type" value="3D"
-                                                   style="height: 25px; width: 25px;">
+                                                   style="height: 25px; width: 25px;" {{ $movie->type == '3D' ? ' checked' : '' }}>
                                             <label class="form-check-label ml-3 mt-1"><h5>3D</h5></label>
                                         </div>
                                     </div>
                                     <div class="col-1 md-2">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="type" value="IMAX"
-                                                   style="height: 25px; width: 25px;">
+                                                   style="height: 25px; width: 25px;" {{ $movie->type == 'IMAX' ? ' checked' : '' }}>
                                             <label class="form-check-label ml-3 mt-1"><h5>IMAX</h5></label>
                                         </div>
                                     </div>

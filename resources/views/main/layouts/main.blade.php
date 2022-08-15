@@ -19,6 +19,11 @@
     />
     <!-- MDB -->
     <link rel="stylesheet" href="{{ asset('test/css/mdb.min.css') }}" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @yield('custom_js')
+    <link rel="icon" href="{{ asset('images/promin_logo.svg') }}" type="image/x-icon" />
+</head>
 </head>
 <body>
 <header>
@@ -253,6 +258,9 @@
 
     <!-- Copyright -->
 </footer>
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <!-- Footer -->
 <!-- MDB -->
 <script type="text/javascript" src="{{ asset('test/js/mdb.min.js') }}"></script>

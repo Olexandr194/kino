@@ -63,7 +63,7 @@ class MoviesController extends Controller
         return view('admin.movies.edit', compact('movie', 'image'));
     }
 
-    public function update(MoviesUpdateRequest $request, MovieImagesUpdateRequest $imgRequest, $id)
+    public function update(MoviesUpdateRequest $request, MovieImagesStoreRequest $imgRequest, $id)
     {
         $data = $request->validated();
         $new_images = $imgRequest->validated();
