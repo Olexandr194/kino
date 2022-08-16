@@ -68,7 +68,7 @@
                             <a class="nav-link" aria-current="page" href="{{ route('main.poster') }}">Афіша</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Розклад</a>
+                            <a class="nav-link" href="{{ route('main.schedule') }}">Розклад</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('main.soon') }}">Скоро</a>

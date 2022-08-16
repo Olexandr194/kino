@@ -4,10 +4,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'Main'], function (){
     Route::get('/', [App\Http\Controllers\Main\MainPageController::class, 'index'])->name('main.main_page');
-    Route::get('/poster', [App\Http\Controllers\Main\MainPageController::class, 'poster'])->name('main.poster');
-    Route::get('/soon', [App\Http\Controllers\Main\MainPageController::class, 'soon'])->name('main.soon');
-    Route::get('/movie/{movie}', [App\Http\Controllers\Main\MainPageController::class, 'movie'])->name('main.movie');
-    Route::get('/movie/{movie}/schedules_search', [App\Http\Controllers\Main\MainPageController::class, 'schedules_search'])->name('main.movie.schedules_search');
+    Route::get('/poster', [App\Http\Controllers\Main\PostersController::class, 'poster'])->name('main.poster');
+    Route::get('/soon', [App\Http\Controllers\Main\SoonController::class, 'soon'])->name('main.soon');
+    Route::get('/movie/{movie}', [App\Http\Controllers\Main\MovieController::class, 'movie'])->name('main.movie');
+    Route::get('/movie/{movie}/schedules_search', [App\Http\Controllers\Main\MovieController::class, 'schedules_search'])->name('main.movie.schedules_search');
+    Route::get('/schedule', [App\Http\Controllers\Main\SchedulesController::class, 'schedule'])->name('main.schedule');
+    Route::get('/schedule/cinema_halls_search', [App\Http\Controllers\Main\SchedulesController::class, 'cinema_halls_search'])->name('main.schedule.cinema_halls_search');
 });
 
 Route::group(['namespace' => 'Personal'], function (){

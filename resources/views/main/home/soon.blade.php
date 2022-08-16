@@ -25,19 +25,18 @@
         <div class="col-lg-9 stretch-card grid-margin" >
             <div class="card" style="background: #0c525d; background-size: cover;  background-attachment: fixed; width: 1500px">
                 <div class="card-body">
-                    @foreach($soon_movies as $movie)
-                        <figure class="figure " style="width: 270px; height: 500px; margin-left: 6px; margin-right: 0px ">
-                            <h5 class="text-white text-center">У кіно з {{ $date->translatedFormat('d F') }}</h5>
-                            <img
-                                src="{{ url('storage/' . $movie->main_image) }}"
-                                class="figure-img img-fluid rounded shadow-3 mb-3"
-                                alt="Taking up Water with a Spoon"
-                                style="height: 370px; width: 270px"
-                            />
-                            <figcaption class="figure-caption2"><h5 class="text-white">{{ $movie->title }}</h5><button class="btn btn-success" style="margin-left: 40px; width: 200px">Купити квитки</button></figcaption>
-                        </figure>
-                    @endforeach
-
+                        @foreach($soon as $movie)
+                                <figure class="figure " style="width: 270px; height: 500px; margin-left: 6px; margin-right: 0px ">
+                                    <h5 class="text-white text-center">У кіно з </h5>
+                                    <img
+                                        src="{{ url('storage/' . $movie->main_image) }}"
+                                        class="figure-img img-fluid rounded shadow-3 mb-3"
+                                        alt="Taking up Water with a Spoon"
+                                        style="height: 370px; width: 270px"
+                                    />
+                                    <figcaption class="figure-caption2"><h5><a class="text-white" href="{{ route('main.movie', $movie->id) }}">{{ $movie->title }}</a></h5><button class="btn btn-success" style="margin-left: 40px; width: 200px">Купити квитки</button></figcaption>
+                                </figure>
+                        @endforeach
                 </div>
             </div>
         </div>

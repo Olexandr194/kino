@@ -71,6 +71,7 @@
                                             <select class="form-control w-50 date" id="date" style="width: 600px">
                                                 <option value="">Оберіть дату</option>
                                                 @if(isset($schedules))
+                                                    $schedules
                                                     @foreach($schedules as $schedule)
                                                         <option value="{{ $schedule->date }}">{{ $schedule->date }}</option>
                                                     @endforeach

@@ -99,10 +99,6 @@ class MoviesController extends Controller
 
         if (Movie::where('id', $id)->exists()) {
             $movie = Movie::where('id', $id)->first();
-           /* $cinema_hall_images = CinemaHallImage::where('cinema_hall_id', $cinema_hall->id)->get();
-            foreach ($cinema_hall_images as $image) {
-                $image->delete();
-            }*/
             $movie->delete();
         }
         $movies = Movie::orderBy('created_at', 'DESC')->paginate(9);

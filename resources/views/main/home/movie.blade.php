@@ -19,9 +19,6 @@
                     @foreach($cinemas as $k=>$cinema)
                         <option value="{{ $cinema[0]->id }}">{{ $cinema[0]->title }}</option>
                     @endforeach
-                        @foreach($cinemas as $k=>$cinema)
-                            <option value="{{ $cinema[0]->id }}">{{ $cinema[0]->title }}</option>
-                        @endforeach
                 </select>
             </div>
             <div class="type_class">

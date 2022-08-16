@@ -25,7 +25,8 @@
         <div class="col-lg-9 stretch-card grid-margin" >
             <div class="card" style="background: #0c525d; background-size: cover;  background-attachment: fixed; width: 1500px">
                 <div class="card-body">
-                    @foreach($movies as $movie)
+                    @foreach($poster as $movie)
+
                         <figure class="figure " style="width: 270px; height: 500px; margin-left: 6px; margin-right: 0px ">
                             <h5 class="text-white text-center">Зараз на екранах</h5>
                             <img
@@ -37,7 +38,6 @@
                             <figcaption class="figure-caption2"><h5><a class="text-white" href="{{ route('main.movie', $movie->id) }}">{{ $movie->title }}</a></h5><button class="btn btn-success" style="margin-left: 40px; width: 200px">Купити квитки</button></figcaption>
                         </figure>
                     @endforeach
-
                 </div>
             </div>
         </div>
