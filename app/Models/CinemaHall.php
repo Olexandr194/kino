@@ -14,4 +14,8 @@ class CinemaHall extends Model
     {
         return $this->hasMany(CinemaHallImage::class, 'cinema_hall_id', 'id');
     }
+
+    public function cinema(){
+        return $this->belongsTo(Cinema::class, 'id', 'cinema_id');
+    }
 }

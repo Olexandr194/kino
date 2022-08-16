@@ -71,6 +71,11 @@ class ScheduleController extends Controller
                 ->where('cinema_hall_id', $request->cinema_hall_id)
                 ->get();
         }
+        elseif (isset($request->date))
+        {
+            $schedules = ScheduleModel::where('date', $request->date)
+                ->get();
+        }
         else {
             $schedules = ScheduleModel::where('cinema_id',$request->cinema_id)->get();
             }
@@ -93,7 +98,7 @@ class ScheduleController extends Controller
         return view('admin.schedules.create', compact('cinema_halls'));
     }
 
-    public function date_search(Request $request)
+   /* public function date_search(Request $request)
     {
         $schedules = ScheduleModel::where('cinema_hall_id', $request->cinema_hall_id)->get();
 
@@ -102,7 +107,7 @@ class ScheduleController extends Controller
         }
 
         return view('admin.schedules.create', compact('schedules'));
-    }
+    }*/
 
     public function edit(ScheduleModel $schedule)
     {

@@ -25,9 +25,9 @@
         <div class="col-lg-9 stretch-card grid-margin" >
             <div class="card" style="background: #0c525d; background-size: cover;  background-attachment: fixed; width: 1500px">
                 <div class="card-body">
-                    @foreach($movies as $movie)
+                    @foreach($soon_movies as $movie)
                         <figure class="figure " style="width: 270px; height: 500px; margin-left: 6px; margin-right: 0px ">
-                            <h5 class="text-white text-center">Зараз на екранах</h5>
+                            <h5 class="text-white text-center">У кіно з {{ $date->translatedFormat('d F') }}</h5>
                             <img
                                 src="{{ url('storage/' . $movie->main_image) }}"
                                 class="figure-img img-fluid rounded shadow-3 mb-3"

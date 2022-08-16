@@ -9,4 +9,8 @@ class Movie extends Model
 {
     protected $table = 'movies';
     protected $guarded = false;
+
+    public function schedules(){
+        return $this->hasMany(ScheduleModel::class, 'movie_id', 'id');
+    }
 }

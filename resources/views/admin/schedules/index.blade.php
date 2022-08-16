@@ -183,7 +183,7 @@
         });
 
         $('#cinema_search').on('change', filter);
-        $('#cinema_halls').on('click', filter);
+        $('#cinema_halls').on('change', filter);
         $('#date').on('change', filter);
 
         function filter()
@@ -232,7 +232,7 @@
             });
         })
 
-        $('#cinema_halls').on('change', function ()
+       /* $('#cinema_halls').on('change', function ()
         {
             let cinema_hall_id = $(this).val();
 
@@ -250,7 +250,7 @@
                     console.log(data)
                 }
             });
-        })
+        })*/
 
 
     </script>

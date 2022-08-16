@@ -56,8 +56,8 @@
     </div>
 
     <div style="margin-left: 200px; width: 1400px">
-        <h1 class="text-center" style="color: #fd7605">Дивіться сьогодні</h1>
-        @foreach($movies as $movie)
+        <h1 class="text-center" style="color: #fd7605">Дивіться сьогодні, {{ $date->translatedFormat('d F') }}</h1>
+        @foreach($now_movies as $movie)
     <figure class="figure" style="width: 270px; height: 450px; margin-left: 6px; margin-right: 0px ">
         <img
             src="{{ url('storage/' . $movie->main_image) }}"
@@ -65,13 +65,13 @@
             alt="Taking up Water with a Spoon"
             style="height: 370px; width: 270px"
         />
-        <figcaption class="figure-caption"><h5 style="color: #fd7605">{{ $movie->title }}</h5><button class="btn btn-success" style="margin-left: 40px; width: 200px">Купити квитки</button></figcaption>
+        <figcaption class="figure-caption"><h5 style="color: #fd7605"><a style="color: #fd7605" href="{{ route('main.movie', $movie->id) }}">{{ $movie->title }}</a></h5><button class="btn btn-success" style="margin-left: 40px; width: 200px">Купити квитки</button></figcaption>
     </figure>
         @endforeach
     </div>
     <div style="margin-left: 200px; width: 1400px">
         <h1 class="text-center" style="color: #fd7605">Дивіться скоро</h1>
-        @foreach($movies as $movie)
+        @foreach($soon_movies as $movie)
             <figure class="figure" style="width: 270px; height: 450px; margin-left: 6px; margin-right: 0px ">
                 <img
                     src="{{ url('storage/' . $movie->main_image) }}"
@@ -79,7 +79,7 @@
                     alt="Taking up Water with a Spoon"
                     style="height: 370px; width: 270px"
                 />
-                <figcaption class="figure-caption"><h5 style="color: #fd7605">{{ $movie->title }}</h5><button class="btn btn-success" style="margin-left: 40px; width: 200px">Купити квитки</button></figcaption>
+                <figcaption class="figure-caption"><h5 style="color: #fd7605"><a style="color: #fd7605" href="{{ route('main.movie', $movie->id) }}">{{ $movie->title }}</a></h5><button class="btn btn-success" style="margin-left: 40px; width: 200px">З {{ $date->translatedFormat('d F') }}</button></figcaption>
             </figure>
         @endforeach
     </div>
