@@ -19,7 +19,7 @@ class MainPageController extends Controller
 
     public function index()
     {
-        $now_movies = Movie::where('seo_url', 'now')->get();
+        $now_movies = Movie::where('seo_url', 'poster')->get();
         $soon_movies = Movie::where('seo_url', 'soon')->get();
         $top_banners = TopBanner::all();
         $bottom_banners = BottomBanner::all();

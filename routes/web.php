@@ -10,6 +10,7 @@ Route::group(['namespace' => 'Main'], function (){
     Route::get('/movie/{movie}/schedules_search', [App\Http\Controllers\Main\MovieController::class, 'schedules_search'])->name('main.movie.schedules_search');
     Route::get('/schedule', [App\Http\Controllers\Main\SchedulesController::class, 'schedule'])->name('main.schedule');
     Route::get('/schedule/cinema_halls_search', [App\Http\Controllers\Main\SchedulesController::class, 'cinema_halls_search'])->name('main.schedule.cinema_halls_search');
+    Route::get('/schedule/filter', [App\Http\Controllers\Main\SchedulesController::class, 'filter'])->name('main.schedule.filter');
 });
 
 Route::group(['namespace' => 'Personal'], function (){

@@ -11,19 +11,14 @@ class SoonController extends Controller
 {
     public function soon()
     {
-        $poster = ScheduleModel::orderBy('date', 'ASC')->get()->groupBy('date')->take(7);
-        $all = ScheduleModel::orderBy('date', 'DESC')->get()->groupBy('date')->all();
-        $soon = ScheduleModel::orderBy('date', 'DESC')->get()->groupBy('date')->take(count($all)-count($poster));
+        $soon = ScheduleModel::all();
 
         foreach ($soon as $schedule) {
-            foreach ($schedule as $value)
-            {
-                $v[] = $value['movie_id'];
-            }
+            $v[] = $schedule['movie_id'];
         }
         $keys = array_unique($v);
         foreach ($keys as $key) {
-            $movies[] = Movie::where('id', $key)->get();
+            $movies[] = Movie::where('id', $key)->where('seo_url', '!=', 'poster')->get();
         }
 
         foreach ($movies as $movie)
@@ -37,6 +32,13 @@ class SoonController extends Controller
 
         $soon = Movie::where('seo_url', 'soon')->get();
 
-        return view('main.home.soon', compact('soon'));
+        foreach ($soon as $movie)
+        {
+            $schedule = ScheduleModel::where('movie_id', $movie->id)->get();
+        }
+
+
+
+        return view('main.home.soon', compact('soon', 'schedule'));
     }
 }

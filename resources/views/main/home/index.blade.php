@@ -79,7 +79,8 @@
                     alt="Taking up Water with a Spoon"
                     style="height: 370px; width: 270px"
                 />
-                <figcaption class="figure-caption"><h5 style="color: #fd7605"><a style="color: #fd7605" href="{{ route('main.movie', $movie->id) }}">{{ $movie->title }}</a></h5><button class="btn btn-success" style="margin-left: 40px; width: 200px">З {{ $date->translatedFormat('d F') }}</button></figcaption>
+                @php $d = \Carbon\Carbon::createFromDate($movie->schedules[0]->date)->translatedFormat('d F') @endphp
+                <figcaption class="figure-caption"><h5 style="color: #fd7605"><a style="color: #fd7605" href="{{ route('main.movie', $movie->id) }}">{{ $movie->title }}</a></h5><button class="btn btn-success" style="margin-left: 40px; width: 200px">З {{ $d }}</button></figcaption>
             </figure>
         @endforeach
     </div>

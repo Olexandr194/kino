@@ -13,7 +13,7 @@
         <h4 class="text-black mt-1" style="margin-right: 10px">Показувати лише: </h4>
         <div class="type_class ml-2">
             <button style="height: 38px" type="button" id="type" class="type btn btn-light" >Всі
-                <input type="hidden" class="type_val" value="Всі">
+                <input type="hidden" class="type_val" value="">
             </button>
             <button style="height: 38px" type="button" id="type" class="type btn btn-light" >2D
                 <input type="hidden" class="type_val" value="2D">
@@ -58,13 +58,11 @@
 
     <div class="row aos-init aos-animate" data-aos="fade-up" style="background-size: cover;  background: #0c525d fixed; margin-top: 30px">
         <div class="col-lg-9 stretch-card grid-margin" >
-            <div class="card" style="width: 1150px; margin-left: 200px; margin-top: 25px">
+            <div class="card schedules" style="width: 1150px; margin-left: 200px; margin-top: 25px">
                 @foreach ($schedules as $k => $v)
-                <div class="card-header bg-gray">
-                    @php @endphp
-                    <h4 style="margin-left: 50px">{{date('Y-m-d', strtotime($k))}} {{ $date[$i-1]->translatedFormat('d F') }}</h4>
-
-
+                    <div class="card-header bg-gray">
+                        @php $f = \Carbon\Carbon::createFromDate(date('d M', strtotime($k)))->translatedFormat('d F, D') @endphp
+                        <h4 style="margin-left: 50px">{{ $f }}</h4>
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -99,7 +97,7 @@
                         @foreach ($v as $schedule)
 
                             <tr class="odd text-center schedule">
-                            <td class="dtr-control sorting_1" tabindex="0">{{ $schedule->time }}</td>
+                            <td class="dtr-control sorting_1" tabindex="0">{{ date('H:i', strtotime($schedule->time)) }}</td>
                             <td class="dtr-control sorting_1" tabindex="0">{{ $schedule->movie->title }}</td>
                             <td class="dtr-control sorting_1" tabindex="0">{{ $schedule->cinema_hall->number }}</td>
                             <td class="dtr-control sorting_1" tabindex="0">{{ $schedule->cost }}</td>
@@ -126,8 +124,8 @@
 
         <div class="col-lg-2 stretch-card grid-margin" style="margin-top: 25px; width: 350px;">
             <div class="card h-100 w-100" style="background: #0c525d; background-size: cover;  background-attachment: fixed;">
-                <img class="h-100" src="{{ 'images/add2.jpg' }}">
-                <img class="h-100" src="{{ 'images/add3.jpg' }}">
+                <img class="" src="{{ 'images/add2.jpg' }}">
+                <img class="" src="{{ 'images/add3.jpg' }}">
             </div>
         </div>
     </div>
@@ -137,11 +135,17 @@
     <!-- End your project here-->
 
     <script>
+        $('.type').click(function (e) {
+            e.preventDefault();
+            $(this).addClass('active')
+                .siblings().removeClass('active');
+        })
 
         $('#cinemas').on('change', filter);
         $(document).on('change', '#cinema_halls', filter);
         $('#date').on('change', filter);
         $('#movies').on('change', filter);
+        $(document).on('click', '#type', filter);
 
         function filter()
         {
@@ -149,14 +153,19 @@
             let cinema_hall_id = $('#cinema_halls').val();
             let date = $('#date').val();
             let movies = $('#movies').val();
+            let type = $('.type_val').closest('.active').find('.type_val').val();
 
-          /*  $.ajax({
-                url: "",
+            console.log(type);
+
+           $.ajax({
+                url: "{{ route('main.schedule.filter') }}",
                 type: "GET",
                 data: {
                     'cinema_id': cinema_id,
                     'cinema_hall_id': cinema_hall_id,
                     'date': date,
+                    'movies': movies,
+                    'type': type,
                 },
                 success: (data) => {
                     console.log(data);
@@ -165,7 +174,7 @@
                 error: (data) => {
                     console.log(data)
                 }
-            });*/
+            });
         }
 
         $('#cinemas').on('change', function ()
