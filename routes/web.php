@@ -44,6 +44,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
         Route::get('/{movie}/edit', [App\Http\Controllers\Admin\MoviesController::class, 'edit'])->name('admin.movies.edit');
         Route::patch('/{movie}', [App\Http\Controllers\Admin\MoviesController::class, 'update'])->name('admin.movies.update');
         Route::post('/movie_delete', [App\Http\Controllers\Admin\MoviesController::class, 'destroy_movie'])->name('admin.movies.destroy_movie');
+        Route::post('/movie_image_delete', [App\Http\Controllers\Admin\MoviesController::class, 'destroy_image'])->name('admin.movies.destroy_image');
     });
 
     Route::group(['namespace' => 'News', 'prefix' => 'news'], function (){

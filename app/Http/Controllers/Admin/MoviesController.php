@@ -58,12 +58,13 @@ class MoviesController extends Controller
 
         foreach ($images as $item) {
             $image[] = $item->image;
+            $id[] = $item->id;
         }
 
-        return view('admin.movies.edit', compact('movie', 'image'));
+        return view('admin.movies.edit', compact('movie', 'image', 'id'));
     }
 
-    public function update(MoviesUpdateRequest $request, MovieImagesStoreRequest $imgRequest, $id)
+    public function update(MoviesUpdateRequest $request, MovieImagesUpdateRequest $imgRequest, $id)
     {
         $data = $request->validated();
         $new_images = $imgRequest->validated();
@@ -107,5 +108,27 @@ class MoviesController extends Controller
             return view('admin.ajax.delete_movie', compact('movies', 'movies_soon'))->render();
         }
         return view('admin.movies.index', compact('movies', 'movies_soon'));
+    }
+
+    public function destroy_image(Request $request, Movie $movie)
+    {
+        $id = $request->input('id');
+
+        if (MovieImages::where('id', $id)->exists()) {
+            $image = MovieImages::where('id', $id)->first();
+            $image->delete();
+        }
+        $images = MovieImages::all()->where('movie_id', $movie->id);
+
+        foreach ($images as $item) {
+            $image[] = $item->image;
+            $id[] = $item->id;
+        }
+
+        if ($request->ajax()) {
+            return view('admin.movies.delete_movie_image', compact('image', 'id', 'movie'))->render();
+        }
+
+        return view('admin.movies.edit', compact('image', 'id','movie'));
     }
 }

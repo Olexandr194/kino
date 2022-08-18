@@ -18,7 +18,7 @@ class MoviesUpdateRequest extends FormRequest
             'title' => 'required',
             'description' => 'required',
             'main_image' => 'nullable|file',
-            'trailer_url' => 'required|url',
+            'trailer_url' => 'required',
             'type' => 'required',
             'seo_url' => 'nullable',
             'seo_title' => 'nullable',

@@ -10,6 +10,7 @@ use App\Models\Cinema;
 use App\Models\CinemaHall;
 use App\Models\Movie;
 use App\Models\ScheduleModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,9 +20,11 @@ class ScheduleController extends Controller
     public function index()
     {
         $cinemas = Cinema::all();
+        $movies = Movie::all();
         $schedules = ScheduleModel::all();
+        $date = ScheduleModel::orderBy('date', 'ASC')->get()->groupBy('date')->all();
 
-        return view('admin.schedules.index', compact('cinemas', 'schedules'));
+        return view('admin.schedules.index', compact('cinemas', 'schedules', 'date', 'movies'));
     }
 
     public function create()
@@ -33,7 +36,7 @@ class ScheduleController extends Controller
 
     public function cinema_search(Request $request)
     {
-        $cinema_halls = CinemaHall::where('cinema_id', 'Like', '%'.$request->search.'%')->get();
+        $cinema_halls = CinemaHall::where('cinema_id', 'Like', '%' . $request->search . '%')->get();
 
         if ($request->ajax()) {
             return view('admin.schedules.cinema_search', compact('cinema_halls'))->render();
@@ -47,9 +50,8 @@ class ScheduleController extends Controller
         $data = $request->validated();
         $dates = explode(',', $data['date']);
 
-        foreach ($dates as $date)
-        {
-            $data['date'] = date( "Y-m-d", strtotime( $date ) );
+        foreach ($dates as $date) {
+            $data['date'] = date("Y-m-d", strtotime($date));
             $schedule = ScheduleModel::firstOrCreate($data);
         }
 
@@ -58,27 +60,16 @@ class ScheduleController extends Controller
 
     public function index_search(Request $request)
     {
-        if (isset($request->cinema_hall_id) and (isset($request->date)))
-        {
-            $schedules = ScheduleModel::where('cinema_id', $request->cinema_id)
-                ->where('cinema_hall_id', $request->cinema_hall_id)
-                ->where('date', $request->date)
-                ->get();
-        }
-        elseif (isset($request->cinema_hall_id))
-        {
-            $schedules = ScheduleModel::where('cinema_id', $request->cinema_id)
-                ->where('cinema_hall_id', $request->cinema_hall_id)
-                ->get();
-        }
-        elseif (isset($request->date))
-        {
-            $schedules = ScheduleModel::where('date', $request->date)
-                ->get();
-        }
-        else {
-            $schedules = ScheduleModel::where('cinema_id',$request->cinema_id)->get();
-            }
+        $cinema_id = $request->cinema_id;
+        $cinema_hall_id = $request->cinema_hall_id;
+        $date = $request->date;
+        $movie_id = $request->movie_id;
+
+        $schedules = ScheduleModel::where('cinema_id', 'Like', '%' . $cinema_id . '%')
+            ->where('cinema_hall_id', 'Like', '%' . $cinema_hall_id . '%')
+            ->where('date', 'Like', '%' . $date . '%')
+            ->where('movie_id', 'Like', '%' . $movie_id . '%')
+            ->get();
 
         if ($request->ajax()) {
             return view('admin.schedules.ajax_schedules', compact('schedules'))->render();
@@ -98,16 +89,16 @@ class ScheduleController extends Controller
         return view('admin.schedules.create', compact('cinema_halls'));
     }
 
-   /* public function date_search(Request $request)
-    {
-        $schedules = ScheduleModel::where('cinema_hall_id', $request->cinema_hall_id)->get();
+    /* public function date_search(Request $request)
+     {
+         $schedules = ScheduleModel::where('cinema_hall_id', $request->cinema_hall_id)->get();
 
-        if ($request->ajax()) {
-            return view('admin.schedules.ajax_date', compact('schedules'))->render();
-        }
+         if ($request->ajax()) {
+             return view('admin.schedules.ajax_date', compact('schedules'))->render();
+         }
 
-        return view('admin.schedules.create', compact('schedules'));
-    }*/
+         return view('admin.schedules.create', compact('schedules'));
+     }*/
 
     public function edit(ScheduleModel $schedule)
     {

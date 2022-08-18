@@ -63,17 +63,25 @@
                                                 <option value="">Оберіть зал</option>
                                                 @if(isset($cinema_halls))
                                                 @foreach($cinema_halls as $hall)
-                                                    <option value="{{ $hall->id }}">{{ $hall->number }}</option>
+                                                    <option value="{{ $hall->id }}">№ {{ $hall->number }}</option>
                                                 @endforeach
+                                                @endif
+                                            </select>
+                                            <label class="mr-3 mt-1 ml-4">Фільм:</label>
+                                            <select class="form-control w-50 movie" id="movie" style="width: 600px">
+                                                <option value="">Оберіть фільм</option>
+                                                @if(isset($movies))
+                                                    @foreach($movies as $movie)
+                                                        <option value="{{ $movie->id }}">{{ $movie->title }}</option>
+                                                    @endforeach
                                                 @endif
                                             </select>
                                             <label class="mr-3 mt-1 ml-4">Дата:</label>
                                             <select class="form-control w-50 date" id="date" style="width: 600px">
                                                 <option value="">Оберіть дату</option>
-                                                @if(isset($schedules))
-                                                    $schedules
-                                                    @foreach($schedules as $schedule)
-                                                        <option value="{{ $schedule->date }}">{{ $schedule->date }}</option>
+                                                @if(isset($date))
+                                                    @foreach($date as $k=>$schedule)
+                                                        <option value="{{ $k }}">{{ $k }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -186,12 +194,14 @@
         $('#cinema_search').on('change', filter);
         $('#cinema_halls').on('change', filter);
         $('#date').on('change', filter);
+        $('#movie').on('change', filter);
 
         function filter()
         {
             let cinema_id = $('#cinema_search').val();
             let cinema_hall_id = $('#cinema_halls').val();
             let date = $('#date').val();
+            let movie_id = $('#movie').val();
 
             console.log(date);
 
@@ -202,6 +212,7 @@
                     'cinema_id': cinema_id,
                     'cinema_hall_id': cinema_hall_id,
                     'date': date,
+                    'movie_id': movie_id,
                 },
                 success: (data) => {
                     console.log(data);
