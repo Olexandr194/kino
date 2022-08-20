@@ -9,6 +9,7 @@ use App\Models\Movie;
 use App\Models\ScheduleModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -26,6 +27,12 @@ class BookingController extends Controller
         $rows_id = $request->rows_id;
         $quantity = $request->quantity;
 
+       /* if (Auth::check()) {
+
+
+        } else {
+            return response()->json(['status' => "Авторизуйтеся щоб продовжити."]);
+        }*/
 
         return view('main.home.booking');
     }

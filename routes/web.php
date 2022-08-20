@@ -20,7 +20,7 @@ Route::group(['namespace' => 'Personal'], function (){
     Route::patch('/personal/{personal}', [App\Http\Controllers\Main\PersonalController::class, 'update'])->name('personal.update');
 });
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function (){
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth', 'admin']], function (){
     Route::get('/', [App\Http\Controllers\Admin\IndexController::class, '__invoke'])->name('admin.main');
 
     Route::group(['namespace' => 'Cinema', 'prefix' => 'cinemas'], function (){

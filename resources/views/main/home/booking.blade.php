@@ -127,8 +127,14 @@
 
                     <div class="card-footer mt-3">
                         <div class="text-center mb-5">
+                            @guest()
+                                <button type="button" class="btn btn-outline-dark book" onclick="return alert('Авторизуйтеся щоб продовжити!')" value="Забронювати" style="width: 200px; margin-right: 10px" data-mdb-ripple-color="dark">Забронювати</button>
+                                <button type="button" class="btn btn-success text-black buy" onclick="return alert('Авторизуйтеся щоб продовжити!')" value="Купити" style="width: 200px;">Купити</button>
+                            @endguest
+                            @auth()
                         <button type="button" class="btn btn-outline-dark book" value="Забронювати" style="width: 200px; margin-right: 10px" data-mdb-ripple-color="dark">Забронювати</button>
                         <button type="button" class="btn btn-success text-black buy" value="Купити" style="width: 200px;">Купити</button>
+                            @endauth
                         </div>
 
                         <h5>Вартість послуги бронювання - 3 грн. за кожне місце.</h5>
@@ -142,30 +148,54 @@
 
     <script>
         $(document).ready(function () {
-            $(document).on('click', '#seat', book);
-
-            function book() {
+            $(document).on('click', '#seat', show);
+            function show() {
                 if ($(this).hasClass('seat')) {
                     $(this).removeClass('seat').addClass('booked');
                 } else {
                     $(this).removeClass('booked').addClass('seat');
                 }
-                let seats_id = [];
-                let rows_id = [];
                 let i = 0;
                 let cost = $('#cost').val();
                 let total_cost = 0;
                 $('.booked').each(function () {
-                    let seat_id = $(this).closest('.id').find('.seat_id').val();
-                    let row_id = $(this).closest('.id').find('.row_id').val();
-                    seats_id[i] = seat_id;
-                    rows_id[i] = row_id;
                     i++;
                     total_cost = i * cost;
                 })
-
                 $.ajax({
-                    url: '{{ route('main.schedule.book') }}',
+                    url: '',
+                    type: 'GET',
+                    data: {
+                        quantity: i,
+                    },
+                    success: (data) => {
+                        if (data) {
+                            $('.show-booked').html(`<h5 class="mt-2" style="margin-left: 10px"> КВИТКИ: ` + i + ` </h5> <h5 class="mt-2" style="margin-right: 10px"> ВАРТІСТЬ: ` + total_cost + ` грн. </h5>`);
+                        } else {
+                            $('.show-booked').html(`<h5 class="mt-2" style="margin-left: 10px"> КВИТКИ: 0 </h5> <h5 class="mt-2" style="margin-right: 10px"> ВАРТІСТЬ: 0 грн. </h5>`);
+                        }
+                    }
+                })
+            }
+            $(document).on('click', '.book', book);
+            $(document).on('click', '.buy', book);
+            function book() {
+                let seats_id = [];
+                let rows_id = [];
+                let i = 0;
+                $('.booked').each(function () {
+                let seat_id = $(this).closest('.id').find('.seat_id').val();
+                let row_id = $(this).closest('.id').find('.row_id').val();
+                seats_id[i] = seat_id;
+                rows_id[i] = row_id;
+                i++;
+                })
+
+                console.log(seats_id);
+                console.log(rows_id);
+                console.log(i);
+                $.ajax({
+                    url: '',
                     type: 'GET',
                     data: {
                         seats_id: seats_id,
@@ -176,12 +206,8 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: (data) => {
-                        if (data) {
-                            $('.show-booked').html(`<h5 class="mt-2" style="margin-left: 10px"> КВИТКИ: ` + i + ` </h5> <h5 class="mt-2" style="margin-right: 10px"> ВАРТІСТЬ: ` + total_cost + ` грн. </h5>`);
-                        } else {
-                            $('.show-booked').html(`<h5 class="mt-2" style="margin-left: 10px"> КВИТКИ: 0 </h5> <h5 class="mt-2" style="margin-right: 10px"> ВАРТІСТЬ: 0 грн. </h5>`);
-                        }
-                    }
+                        $('.schedules').html(data);
+                    },
                 })
             }
         });

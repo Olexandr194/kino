@@ -29,11 +29,33 @@ class MainPageController extends Controller
         $date = Carbon::createFromDate();
 
         /*--------------------------Видаляю старі розклади-----------------------*/
-        foreach ($schedules as $schedule)
-        {
-            if ($schedule->date < date('Y-m-d'))
-            {
+        foreach ($schedules as $schedule) {
+            if ($schedule->date < date('Y-m-d')) {
                 $schedule->delete();
+            }
+        }
+        /*--------------------------Змінюю старі статуси-----------------------*/
+
+        foreach ($schedules as $schedule) {
+            $v[] = $schedule['movie_id'];
+        }
+        $k_s = array_unique($v);
+
+        foreach ($movies as $movie) {
+            $v[] = $movie['id'];
+        }
+        $k_m = array_unique($v);
+        $test = array_diff($k_m, $k_s);
+
+        foreach ($test as $t) {
+            $movies_o[] = Movie::where('id', $t)->get();
+        }
+        foreach ($movies_o as $movie)
+        {
+            foreach ($movie as $m)
+            {
+                $m->seo_url = 'old';
+                $m->update();
             }
         }
 
