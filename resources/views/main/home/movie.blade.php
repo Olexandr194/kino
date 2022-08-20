@@ -15,7 +15,7 @@
         <div class="d-flex justify-content-center text-center">
             <h4 class="text-black mt-1 mr-2">Розклад сеансів кінотеатру: </h4>
             <div class="form-group">
-                <select class="form-control" id="cinema_id" style="width: 200px; margin-left: 20px; margin-right: 20px">
+                <select class="form-select" aria-label="Default select example" id="cinema_id" style="width: 200px; margin-left: 20px; margin-right: 20px; height: 35px">
                     @foreach($cinemas as $k=>$cinema)
                         <option value="{{ $cinema[0]->id }}">{{ $cinema[0]->title }}</option>
                     @endforeach

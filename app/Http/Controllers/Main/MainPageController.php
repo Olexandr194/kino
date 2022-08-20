@@ -37,29 +37,6 @@ class MainPageController extends Controller
             }
         }
 
-        /*--------------------------Визначаю статус фільму-----------------------*/
-        /*foreach ($movies as $movie) {
-            $schedule = ScheduleModel::where('movie_id', $movie->id)->get();
-            foreach ($schedule as $sch)
-            {
-                $v[] = $sch['date'];
-            }
-            $min = min($v);
-
-            if ($min == date('Y-m-d'))
-            {
-                $movie->seo_url = 'now';
-            }
-            elseif ($min > date('Y-m-d'))
-            {
-                $movie->seo_url = 'soon';
-            }
-            else{
-                $movie->seo_url = 'none';
-            }
-            $movie->update();
-        }*/
-
         return view('main.home.index', compact('top_banners', 'bottom_banners', 'main_banner', 'movies', 'now_movies', 'soon_movies', 'date'));
     }
 }

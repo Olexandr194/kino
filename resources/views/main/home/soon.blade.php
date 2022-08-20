@@ -39,10 +39,10 @@
                                     alt="Taking up Water with a Spoon"
                                     style="height: 370px; width: 270px"
                                 />
-                                <figcaption class="figure-caption2"><h5><a class="text-white"
+                                <figcaption class="figure-caption2"><h5 class="text-center"><a class="text-white"
                                                                            href="{{ route('main.movie', $movie->id) }}">{{ $movie->title }}</a>
                                     </h5>
-                                    <button class="btn btn-success" style="margin-left: 40px; width: 200px">Купити
+                                    <button class="btn btn-success" disabled style="margin-left: 40px; width: 200px">Купити
                                         квитки
                                     </button>
                                 </figcaption>

@@ -11,6 +11,8 @@ Route::group(['namespace' => 'Main'], function (){
     Route::get('/schedule', [App\Http\Controllers\Main\SchedulesController::class, 'schedule'])->name('main.schedule');
     Route::get('/schedule/cinema_halls_search', [App\Http\Controllers\Main\SchedulesController::class, 'cinema_halls_search'])->name('main.schedule.cinema_halls_search');
     Route::get('/schedule/filter', [App\Http\Controllers\Main\SchedulesController::class, 'filter'])->name('main.schedule.filter');
+    Route::get('/booking/{schedule}', [App\Http\Controllers\Main\BookingController::class, 'index'])->name('main.schedule.booking');
+    Route::get('/booking', [App\Http\Controllers\Main\BookingController::class, 'book'])->name('main.schedule.book');
 });
 
 Route::group(['namespace' => 'Personal'], function (){

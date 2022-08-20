@@ -98,17 +98,14 @@
 
                             <tr class="odd text-center schedule">
                             <td class="dtr-control sorting_1" tabindex="0">{{ date('H:i', strtotime($schedule->time)) }}</td>
-                            <td class="dtr-control sorting_1" tabindex="0">{{ $schedule->movie->title }}</td>
+                            <td class="dtr-control sorting_1" style="width: 250px" tabindex="0">{{ $schedule->movie->title }}</td>
                             <td class="dtr-control sorting_1" tabindex="0">{{ $schedule->cinema_hall->number }}</td>
                             <td class="dtr-control sorting_1" tabindex="0">{{ $schedule->cost }}</td>
                             </td>
-                            <td><a class="ml-4"
-                                   href="#"><i
-                                        class="fas fa-ticket fa-2x text-dark" style=""></i></a>
+                            <td>
                                 <a class="ml-4"
-                                   href="#"><i
-                                        class="fas fa-ticket fa-2x text-dark" style=""></i></a></td>
-
+                                   href="{{ route('main.schedule.booking', $schedule->id) }}"><i
+                                        class="fas fa-ticket fa-3x" style="color: #00cd5a"></i></a></td>
                             <input type="hidden" class="schedule_id"
                                    value="">
                         </tr>
