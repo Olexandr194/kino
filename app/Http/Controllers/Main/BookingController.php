@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
 use App\Models\Cinema;
 use App\Models\CinemaHall;
 use App\Models\Movie;
@@ -17,8 +18,9 @@ class BookingController extends Controller
     {
         $cinema_hall = CinemaHall::where('id', $schedule->cinema_hall_id)->first();
         $movie = Movie::where('id', $schedule->movie_id)->first();
+        $booking = Booking::where('schedule_id', $schedule->id)->get();
 
-        return view('main.home.booking', compact('schedule', 'cinema_hall', 'movie'));
+        return view('main.home.booking', compact('schedule', 'cinema_hall', 'movie', 'booking'));
     }
 
     public function book(Request $request)
@@ -26,15 +28,17 @@ class BookingController extends Controller
         $seats_id = $request->seats_id;
         $rows_id = $request->rows_id;
         $quantity = $request->quantity;
+        $id = $request->id;
 
-       /* if (Auth::check()) {
-
-
-        } else {
-            return response()->json(['status' => "Авторизуйтеся щоб продовжити."]);
-        }*/
-
-        return view('main.home.booking');
+        for ($i=0; $i<$quantity; $i++) {
+            $booking = new Booking();
+            $booking->user_id = Auth::id();
+            $booking->schedule_id = $id;
+            $booking->row = $rows_id[$i];
+            $booking->seat = $seats_id[$i];
+            $booking->save();
+        }
+        return redirect()->route('main.main_page');
     }
 
 

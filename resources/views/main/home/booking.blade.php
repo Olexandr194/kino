@@ -29,6 +29,8 @@
                             {{ date('H:i', strtotime($schedule->time)) }},
                             Зал №{{ $cinema_hall->number }}
                         </h5>
+                        <input type="hidden" class="schedule_id"
+                               value="{{ $schedule->id }}">
                         <div class="d-flex" style="margin-top: 50px">
                         <h5 class="text-black mt-1" style="margin-left: 20px;">ВАРТІСТЬ КВИТКА В ГРН. :
                             <a class="btn btn-primary" style="background-color: #dd4b39;" href="#!" role="button">
@@ -36,7 +38,7 @@
                                 <input type="hidden" id="cost" value="{{ $schedule->cost }}">
                             </a> </h5>
                         <h5 class="text-black mt-1 ml-5" style="margin-left: 20px;">ЗАБРОНЬОВАНО:
-                            <a class="btn btn-primary" style="background-color: #333333;" href="#!" role="button">
+                            <a class="btn btn-dark disabled" style="background-color: #333333;" href="#!" role="button">
                                 <i class="fas fa-user"></i>
                             </a></h5>
                         <h5 class="text-black ml-5 d-flex" style="margin-left: 20px; margin-top: 15px">ВАШЕ ЗАМОВЛЕННЯ: </h5>
@@ -56,7 +58,19 @@
                             </div>
                             <div class="d-flex justify-content-center col-md-8">
                                 @for ($i=1; $i<13; $i++)
-                                    <a class="btn btn-primary seat id" id="seat">
+                                    <a class="btn
+                                    @if (isset($booking))
+                                @foreach($booking as $book)
+                                    @if(($book->row == 1) && $book->seat == $i)
+                                            btn-dark bought disabled
+                                    @else
+                                           btn-primary seat
+                                    @endif
+                                @endforeach
+
+                                @endif
+                                btn-primary seat
+                                    id" id="seat">
                                         {{ $i }}
                                         <input type="hidden" class="seat_id" value="{{ $i }}">
                                         <input type="hidden" class="row_id" value="1">
@@ -70,7 +84,19 @@
                             </div>
                             <div class="d-flex justify-content-center col-md-8">
                                 @for ($i=1; $i<15; $i++)
-                                    <a class="btn btn-primary seat id" id="seat">
+                                    <a class="btn
+                                    @if (isset($booking))
+                                @foreach($booking as $book)
+                                    @if(($book->row == 2) && $book->seat == $i)
+                                            btn-dark bought disabled
+                                    @else
+                                           btn-primary seat
+                                    @endif
+                                @endforeach
+
+                                @endif
+                                btn-primary seat
+                                    id" id="seat">
                                         {{ $i }}
                                         <input type="hidden" class="seat_id" value="{{ $i }}">
                                         <input type="hidden" class="row_id" value="2">
@@ -84,7 +110,19 @@
                             </div>
                             <div class="d-flex justify-content-center col-md-8">
                                 @for ($i=1; $i<16; $i++)
-                                    <a class="btn btn-primary seat id" id="seat">
+                                    <a class="btn
+                                    @if (isset($booking))
+                                @foreach($booking as $book)
+                                    @if(($book->row == 3) && $book->seat == $i)
+                                            btn-dark bought disabled
+                                    @else
+                                           btn-primary seat
+                                    @endif
+                                @endforeach
+
+                                @endif
+                                btn-primary seat
+                                    id" id="seat">
                                         {{ $i }}
                                         <input type="hidden" class="seat_id" value="{{ $i }}">
                                         <input type="hidden" class="row_id" value="3">
@@ -99,7 +137,19 @@
                             </div>
                             <div class="d-flex justify-content-center col-md-8">
                                 @for ($i=1; $i<14; $i++)
-                                    <a class="btn btn-primary text-center seat id" id="seat">
+                                    <a class="btn
+                                    @if (isset($booking))
+                                @foreach($booking as $book)
+                                    @if(($book->row == $j) && $book->seat == $i)
+                                            btn-dark bought disabled
+                                    @else
+                                           btn-primary seat
+                                    @endif
+                                @endforeach
+
+                                @endif
+                                btn-primary seat
+                                    id" id="seat">
                                         {{ $i }}
                                         <input type="hidden" class="seat_id" value="{{ $i }}">
                                         <input type="hidden" class="row_id" value="{{ $j }}">
@@ -114,7 +164,18 @@
                             </div>
                             <div class="d-flex justify-content-center col-md-10" style="width: 800px">
                                 @for ($i=1; $i<19; $i++)
-                                    <a class="btn btn-primary text-center seat id" id="seat">
+                                    <a class="btn
+                                    @if (isset($booking))
+                                @foreach($booking as $book)
+                                    @if(($book->row == 10) && $book->seat == $i)
+                                            btn-dark bought disabled
+                                    @else
+                                           btn-primary seat
+                                    @endif
+                                @endforeach
+                                @endif
+                                btn-primary seat
+                                    id" id="seat">
                                         {{ $i }}
                                         <input type="hidden" class="seat_id" value="{{ $i }}">
                                         <input type="hidden" class="row_id" value="10">
@@ -177,40 +238,44 @@
                     }
                 })
             }
-            $(document).on('click', '.book', book);
-            $(document).on('click', '.buy', book);
-            function book() {
+        });
+
+        $(document).on('click', '.book', book);
+        function book() {
                 let seats_id = [];
                 let rows_id = [];
                 let i = 0;
+                let id = $('.schedule_id').val();
                 $('.booked').each(function () {
-                let seat_id = $(this).closest('.id').find('.seat_id').val();
-                let row_id = $(this).closest('.id').find('.row_id').val();
-                seats_id[i] = seat_id;
-                rows_id[i] = row_id;
-                i++;
+                    let seat_id = $(this).closest('.id').find('.seat_id').val();
+                    let row_id = $(this).closest('.id').find('.row_id').val();
+                    seats_id[i] = seat_id;
+                    rows_id[i] = row_id;
+                    i++;
                 })
-
-                console.log(seats_id);
-                console.log(rows_id);
-                console.log(i);
+            if(i !== 0)
+            {
                 $.ajax({
-                    url: '',
+                    url: '{{ route('main.schedule.book') }}',
                     type: 'GET',
                     data: {
                         seats_id: seats_id,
                         rows_id: rows_id,
                         quantity: i,
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: (data) => {
-                        $('.schedules').html(data);
+                        id: id,
                     },
                 })
+                alert('Приємного перегляду!')
+                let url = "http://laravel.kino.ua/";
+                $(location).attr('href',url);
+            } else {
+                alert('Оберіть місця!')
+
             }
-        });
+
+
+        }
+
     </script>
 
     <style>
@@ -233,6 +298,17 @@
         .booked:hover
         {
             background-color: #1e7e34;
+        }
+
+        .bought
+        {
+            background-color: #333333;
+            margin-right: 5px;
+            width: 80px
+        }
+        .bought:hover
+        {
+            background-color: #333333;
         }
 
     </style>
