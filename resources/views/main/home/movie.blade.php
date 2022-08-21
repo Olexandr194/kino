@@ -69,6 +69,8 @@
                         {{date("H:i", strtotime($schedule->time))}} | {{$schedule->type}}<br>
                         <hr>
                         Зал №{{$schedule->cinema_hall->number}} | {{$schedule->cost}}грн.
+                        <input type="hidden" class="schedule_id"
+                               value="{{ $schedule->id }}">
                     </button>
                 @endforeach
             </div>
@@ -157,11 +159,14 @@
                 .siblings().removeClass('active');
         })
 
-        $('.schedules_to_book').click(function (e) {
-            e.preventDefault();
-            $('.schedule').removeClass('schedule btn btn btn-outline-dark mt-3').addClass('schedule btn btn btn-dark mt-3')
-                .siblings().removeClass('schedule btn btn btn-dark mt-3').addClass('schedule btn btn btn-outline-dark mt-3');
-        })
+        $(document).ready(function () {
+            $(document).on('click', '.schedules_to_book', (function (e) {
+                    e.preventDefault();
+                    $('.schedule').removeClass('schedule btn btn btn-outline-dark mt-3').addClass('schedule btn btn btn-dark mt-3 book-date')
+                        .siblings().removeClass('schedule btn btn btn-dark mt-3 book-date').addClass('schedule btn btn btn-outline-dark mt-3');
+                })
+            )
+        });
 
 
 
@@ -196,6 +201,19 @@
                   }
               });
           }
+
+        $(document).on('click', '.book-tickets', book);
+        function book() {
+            let id =  $('.schedule_id').closest('.book-date').find('.schedule_id').val();
+
+            if(id !== undefined)
+            {
+                let url = `http://laravel.kino.ua/booking/`+ id +``;
+                $(location).attr('href',url);
+            } else {
+                alert('Оберіть сеанс!')
+            }
+        }
 
     </script>
 

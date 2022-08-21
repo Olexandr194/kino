@@ -4,5 +4,7 @@
         {{date("H:i", strtotime($schedule->time))}} | {{$schedule->type}}<br>
         <hr>
         Зал №{{$schedule->cinema_hall->number}} | {{$schedule->cost}}грн.
+        <input type="hidden" class="schedule_id"
+               value="{{ $schedule->id }}">
     </button>
 @endforeach
