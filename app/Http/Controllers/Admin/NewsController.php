@@ -58,11 +58,18 @@ class NewsController extends Controller
     public function edit(News $news)
     {
         $images = NewsImages::all()->where('news_id', $news->id);
+
         foreach ($images as $item) {
             $image[] = $item->image;
+            $id[] = $item->id;
+        }
+        if(!isset($image))
+        {
+            $image[] = 0;
+            $id[] = 0;
         }
 
-        return view('admin.news.edit', compact('news', 'image'));
+        return view('admin.news.edit', compact('news', 'image', 'id'));
     }
 
     public function update(NewsUpdateRequest $request, NewsImagesUpdateRequest $imgRequest, $id)
@@ -113,6 +120,28 @@ class NewsController extends Controller
             return view('admin.ajax.delete_news', compact('news'))->render();
         }
         return view('admin.news.index', compact('news'));
+    }
+
+    public function destroy_image(Request $request, News $news)
+    {
+        $id = $request->input('id');
+
+        if (NewsImages::where('id', $id)->exists()) {
+            $image = NewsImages::where('id', $id)->first();
+            $image->delete();
+        }
+        $images = NewsImages::all()->where('news_id', $news->id);
+
+        foreach ($images as $item) {
+            $image[] = $item->image;
+            $id[] = $item->id;
+        }
+
+        if ($request->ajax()) {
+            return view('admin.news.delete_news_image', compact('image', 'id', 'news'))->render();
+        }
+
+        return view('admin.movies.edit', compact('image', 'id','news'));
     }
 
 }

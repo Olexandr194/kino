@@ -17,9 +17,10 @@ class MoviesController extends Controller
 
     public function index()
     {
-        $movies = Movie::orderBy('created_at', 'DESC')->paginate(9);
-        $movies_soon = Movie::orderBy('created_at', 'DESC')->paginate(5);
-        return view('admin.movies.index', compact('movies', 'movies_soon'));
+        $movies = Movie::where('seo_url', 'poster')->get();
+        $old = Movie::where('seo_url', 'old')->get();
+        $movies_soon = Movie::where('seo_url', 'soon')->get();
+        return view('admin.movies.index', compact('movies', 'movies_soon', 'old'));
     }
 
     public function create()
@@ -59,6 +60,10 @@ class MoviesController extends Controller
         foreach ($images as $item) {
             $image[] = $item->image;
             $id[] = $item->id;
+        }
+        if (!isset($image)) {
+            $image[] = 0;
+            $id[] = 0;
         }
 
         return view('admin.movies.edit', compact('movie', 'image', 'id'));
@@ -129,6 +134,6 @@ class MoviesController extends Controller
             return view('admin.movies.delete_movie_image', compact('image', 'id', 'movie'))->render();
         }
 
-        return view('admin.movies.edit', compact('image', 'id','movie'));
+        return view('admin.movies.edit', compact('image', 'id', 'movie'));
     }
 }

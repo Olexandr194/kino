@@ -189,8 +189,8 @@
                     <div class="card-footer mt-3">
                         <div class="text-center mb-5">
                             @guest()
-                                <button type="button" class="btn btn-outline-dark book" onclick="return alert('Авторизуйтеся щоб продовжити!')" value="Забронювати" style="width: 200px; margin-right: 10px" data-mdb-ripple-color="dark">Забронювати</button>
-                                <button type="button" class="btn btn-success text-black buy" onclick="return alert('Авторизуйтеся щоб продовжити!')" value="Купити" style="width: 200px;">Купити</button>
+                                <button type="button" class="btn btn-outline-dark " onclick="return alert('Авторизуйтеся щоб продовжити!')" value="Забронювати" style="width: 200px; margin-right: 10px" data-mdb-ripple-color="dark">Забронювати</button>
+                                <button type="button" class="btn btn-success text-black " onclick="return alert('Авторизуйтеся щоб продовжити!')" value="Купити" style="width: 200px;">Купити</button>
                             @endguest
                             @auth()
                         <button type="button" class="btn btn-outline-dark book" value="Забронювати" style="width: 200px; margin-right: 10px" data-mdb-ripple-color="dark">Забронювати</button>
@@ -272,6 +272,8 @@
                 alert('Оберіть місця!')
 
             }
+
+
         }
 
     </script>

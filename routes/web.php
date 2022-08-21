@@ -56,6 +56,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
         Route::get('/{news}/edit', [App\Http\Controllers\Admin\NewsController::class, 'edit'])->name('admin.news.edit');
         Route::patch('/{news}', [App\Http\Controllers\Admin\NewsController::class, 'update'])->name('admin.news.update');
         Route::post('/news_delete', [App\Http\Controllers\Admin\NewsController::class, 'destroy_news'])->name('admin.news.destroy_news');
+        Route::post('/news_image_delete', [App\Http\Controllers\Admin\NewsController::class, 'destroy_image'])->name('admin.news.destroy_image');
     });
 
     Route::group(['namespace' => 'Actions', 'prefix' => 'actions'], function (){
@@ -65,6 +66,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
         Route::get('/{action}/edit', [App\Http\Controllers\Admin\ActionsController::class, 'edit'])->name('admin.actions.edit');
         Route::patch('/{action}', [App\Http\Controllers\Admin\ActionsController::class, 'update'])->name('admin.actions.update');
         Route::post('/action_delete', [App\Http\Controllers\Admin\ActionsController::class, 'destroy_action'])->name('admin.actions.destroy_action');
+        Route::post('/action_image_delete', [App\Http\Controllers\Admin\ActionsController::class, 'destroy_image'])->name('admin.actions.destroy_image');
     });
 
     Route::group(['namespace' => 'Pages', 'prefix' => 'pages'], function (){
@@ -82,6 +84,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
         Route::patch('/contact_page/{contact_page}', [App\Http\Controllers\Admin\PagesController::class, 'contact_page_update'])->name('admin.pages.contact_page_update');
         Route::post('/contact_page/delete', [App\Http\Controllers\Admin\PagesController::class, 'destroy_contact_page'])->name('admin.pages.destroy_contact_page');
         Route::post('/page/delete', [App\Http\Controllers\Admin\PagesController::class, 'destroy_page'])->name('admin.pages.destroy');
+        Route::post('/page_image_delete', [App\Http\Controllers\Admin\PagesController::class, 'destroy_image'])->name('admin.pages.destroy_image');
     });
 
     Route::group(['namespace' => 'Banners', 'prefix' => 'banners'], function (){

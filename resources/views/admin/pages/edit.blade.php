@@ -112,13 +112,16 @@
                                         <label>Галерея зображень</label>
                                     </div>
                                     @for ($i = 0; $i < 5; $i++)
-                                        <div class="col-md-2">
-                                            <label>
+                                        <div class="col-md-2 ajax-image">
+                                            <label class="images">
                                                 <span class="close"
-                                                      onclick="document.getElementById('image{{ $i }}').src = '{{ asset('images/img_3.png') }}'"></span>
+                                                      onclick="document.getElementById('image{{ $i }}').src = '{{ asset('images/img_3.png') }}'">
+                                                </span>
                                                 @if (isset($image[$i]))
                                                     <img id="image{{ $i }}" src="{{ url('storage/' . $image[$i]) }}"
                                                          class="add-img">
+                                                    <input type="hidden" class="image_id"
+                                                           value="{{ $id[$i] }}">
                                                 @else
                                                     <img id="image{{ $i }}" src="{{ asset('images/img_3.png') }}"
                                                          class="add-img">
@@ -256,6 +259,29 @@
     </style>
 
     <script>
+        $(function () {
+            $(document).on('click', '.close', function (event) {
+                event.preventDefault();
+                let image_id = $(this).closest('.images').find('.image_id').val();
+                console.log(image_id);
+                $.ajax({
+                    url: "{{ route('admin.pages.destroy_image', $page->id) }}",
+                    type: "POST",
+                    data: {
+                        'id': image_id,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: (data) => {
+                        $('.ajax-image').html(data);
+                    },
+                    error: (data) => {
+                        console.log(data)
+                    }
+                });
+            });
+        });
     </script>
 
 @endsection

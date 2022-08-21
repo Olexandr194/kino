@@ -84,9 +84,14 @@ class PagesController extends Controller
         $images = PageImages::all()->where('page_id', $page->id);
         foreach ($images as $item) {
             $image[] = $item->image;
+            $id[] = $item->id;
+        }
+        if (!isset($image)) {
+            $image[] = 0;
+            $id[] = 0;
         }
 
-        return view('admin.pages.edit', compact('page', 'image'));
+        return view('admin.pages.edit', compact('page', 'image', 'id'));
     }
 
     public function update(PagesUpdateRequest $request, PageImagesUpdateRequest $imgRequest, $id)
@@ -202,6 +207,28 @@ class PagesController extends Controller
             return view('admin.ajax.delete_page', compact('pages', 'main_page', 'contact_page'))->render();
         }
         return view('admin.pages.index', compact('pages'));
+    }
+
+    public function destroy_image(Request $request, Page $page)
+    {
+        $id = $request->input('id');
+
+        if (PageImages::where('id', $id)->exists()) {
+            $image = PageImages::where('id', $id)->first();
+            $image->delete();
+        }
+        $images = PageImages::all()->where('page_id', $page->id);
+
+        foreach ($images as $item) {
+            $image[] = $item->image;
+            $id[] = $item->id;
+        }
+
+        if ($request->ajax()) {
+            return view('admin.pages.delete_page_image', compact('image', 'id', 'page'))->render();
+        }
+
+        return view('admin.movies.edit', compact('image', 'id', 'page'));
     }
 
 }

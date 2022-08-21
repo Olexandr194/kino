@@ -69,9 +69,14 @@ class ActionsController extends Controller
         $images = ActionImages::all()->where('action_id', $action->id);
         foreach ($images as $item) {
             $image[] = $item->image;
+            $id[] = $item->id;
+        }
+        if (!isset($image)) {
+            $image[] = 0;
+            $id[] = 0;
         }
 
-        return view('admin.actions.edit', compact('action', 'image'));
+        return view('admin.actions.edit', compact('action', 'image', 'id'));
     }
 
     public function update(ActionsUpdateRequest $request, ActionImagesUpdateRequest $imgRequest, $id)
@@ -122,6 +127,28 @@ class ActionsController extends Controller
             return view('admin.ajax.delete_action', compact('actions'))->render();
         }
         return view('admin.actions.index', compact('actions'));
+    }
+
+    public function destroy_image(Request $request, Action $action)
+    {
+        $id = $request->input('id');
+
+        if (ActionImages::where('id', $id)->exists()) {
+            $image = ActionImages::where('id', $id)->first();
+            $image->delete();
+        }
+        $images = ActionImages::all()->where('action_id', $action->id);
+
+        foreach ($images as $item) {
+            $image[] = $item->image;
+            $id[] = $item->id;
+        }
+
+        if ($request->ajax()) {
+            return view('admin.actions.delete_action_image', compact('image', 'id', 'action'))->render();
+        }
+
+        return view('admin.movies.edit', compact('image', 'id', 'action'));
     }
 
 }
