@@ -19,9 +19,9 @@ class BookingController extends Controller
         $cinema_hall = CinemaHall::where('id', $schedule->cinema_hall_id)->first();
         $movie = Movie::where('id', $schedule->movie_id)->first();
         $booking = Booking::where('schedule_id', $schedule->id)->get();
-        $user_booking = Booking::where('schedule_id', $schedule->id)->where('user_id', Auth::id())->get();
+        $user = Auth::id();
 
-        return view('main.home.booking', compact('schedule', 'cinema_hall', 'movie', 'booking', 'user_booking'));
+        return view('main.home.booking', compact('schedule', 'cinema_hall', 'movie', 'booking', 'user'));
     }
 
     public function book(Request $request)

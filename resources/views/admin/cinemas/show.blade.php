@@ -28,17 +28,25 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
                     <div class="col-12 ml-2">
+                        <form action="{{ route('admin.cinemas.update', $cinema->id) }}" method="POST"
+                              enctype="multipart/form-data">
+                            @csrf
+                            @method('PATCH')
                             <div class="form-group">
                                 <div class="d-flex">
                                     <div class="col-md-2">
                                         <label>Назва кінотеатру:</label>
                                     </div>
-                                    <div class="col-md-4">
-                                        {{ $cinema->title }}
-                                    </div>
+                                    <input type="text" class="form-control" name="title"
+                                           placeholder="Назва фільму"
+                                           value="{{ $cinema->title }}">
+                                    @error('title')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group mt-5">
@@ -47,7 +55,12 @@
                                         <label>Опис кінотеатру:</label>
                                     </div>
                                     <div class="col-md-9">
-                                        {{ $cinema->description }}
+                                        <label for="summernote"></label><textarea id="summernote"
+                                                                                  name="description">{{ $cinema->description }}</textarea>
+
+                                        @error('description')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -57,10 +70,21 @@
                                         <label>Умови:</label>
                                     </div>
                                     <div class="col-md-9">
-                                        {{ $cinema->condition }}
+                                        <label for="summernote2"></label><textarea id="summernote2"
+                                                                                  name="condition">{{ $cinema->condition }}</textarea>
+
+                                        @error('condition')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group mt-5 ">
+                                <div class="text-center">
+                                    <input type="submit" class="btn btn-dark" value="Змінити">
+                                </div>
+                            </div>
+                        </form>
 
                             {{--------------------------------------------------------------------------------------------------------------------------------------------}}
 

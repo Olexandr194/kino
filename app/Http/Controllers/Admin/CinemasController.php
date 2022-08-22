@@ -88,6 +88,19 @@ class CinemasController extends Controller
         return view('admin.cinemas.show', compact('cinema', 'cinema_images', 'cinema_halls'));
     }
 
+    public function update(Request $request, $id)
+    {
+        $data = $request;
+        $cinema = Cinema::where('id', $id)->first();
+
+        $cinema->title = $data['title'];
+        $cinema->description = $data['description'];
+        $cinema->condition = $data['condition'];
+        $cinema->update();
+
+        return redirect()->route('admin.cinemas.index');
+    }
+
     public function destroy_cinema(Request $request)
     {
         $id = $request->input('id');

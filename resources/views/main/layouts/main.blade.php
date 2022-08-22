@@ -74,7 +74,7 @@
                             <a class="nav-link" href="{{ route('main.soon') }}">Скоро</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Кінотеатри</a>
+                            <a class="nav-link" href="{{ route('main.cinemas.index') }}">Кінотеатри</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Акції</a>

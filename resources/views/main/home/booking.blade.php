@@ -38,7 +38,7 @@
                                 <input type="hidden" id="cost" value="{{ $schedule->cost }}">
                             </a> </h5>
                         <h5 class="text-black mt-1 ml-5" style="margin-left: 20px;">ЗАБРОНЬОВАНО:
-                            <a class="btn btn-dark disabled" style="background-color: #333333;" href="#!" role="button">
+                            <a class="btn btn-success disabled" href="#!" role="button">
                                 <i class="fas fa-user"></i>
                             </a></h5>
                         <h5 class="text-black ml-5 d-flex" style="margin-left: 20px; margin-top: 15px">ВАШЕ ЗАМОВЛЕННЯ: </h5>
@@ -60,18 +60,20 @@
                                 @for ($i=1; $i<13; $i++)
                                     <a class="btn
                                     @if (isset($booking))
-                                @foreach($booking as $book)
-                                    @if(($book->row == 1) && $book->seat == $i)
+                                         @foreach($booking as $book)
+                                    @if(($book->row == 1) && $book->seat == $i && $book->user_id == $user )
+                                            btn-success  disabled
+                                    @elseif(($book->row == 1) && $book->seat == $i)
                                             btn-dark bought disabled
                                     @else
                                            btn-primary seat
                                     @endif
-                                @endforeach
+                                         @endforeach
 
                                 @endif
                                 btn-primary seat
                                     id" id="seat">
-                                        {{ $i }}
+                                            {{ $i }}
                                         <input type="hidden" class="seat_id" value="{{ $i }}">
                                         <input type="hidden" class="row_id" value="1">
                                     </a>
@@ -85,19 +87,22 @@
                             <div class="d-flex justify-content-center col-md-8">
                                 @for ($i=1; $i<15; $i++)
                                     <a class="btn
-                                    @if (isset($booking))
-                                @foreach($booking as $book)
-                                    @if(($book->row == 2) && $book->seat == $i)
+                                     @if (isset($booking))
+                                         @foreach($booking as $book)
+                                    @if(($book->row == 2) && $book->seat == $i && $book->user_id == $user )
+                                            btn-success  disabled
+                                    @elseif(($book->row == 2) && $book->seat == $i)
                                             btn-dark bought disabled
                                     @else
                                            btn-primary seat
                                     @endif
-                                @endforeach
+                                         @endforeach
 
                                 @endif
                                 btn-primary seat
                                     id" id="seat">
-                                        {{ $i }}
+                                                {{ $i }}
+
                                         <input type="hidden" class="seat_id" value="{{ $i }}">
                                         <input type="hidden" class="row_id" value="2">
                                     </a>
@@ -111,14 +116,16 @@
                             <div class="d-flex justify-content-center col-md-8">
                                 @for ($i=1; $i<16; $i++)
                                     <a class="btn
-                                    @if (isset($booking))
-                                @foreach($booking as $book)
-                                    @if(($book->row == 3) && $book->seat == $i)
+                                     @if (isset($booking))
+                                         @foreach($booking as $book)
+                                    @if(($book->row == 1) && $book->seat == $i && $book->user_id == $user )
+                                            btn-success  disabled
+                                    @elseif(($book->row == 1) && $book->seat == $i)
                                             btn-dark bought disabled
                                     @else
                                            btn-primary seat
                                     @endif
-                                @endforeach
+                                         @endforeach
 
                                 @endif
                                 btn-primary seat
@@ -139,13 +146,15 @@
                                 @for ($i=1; $i<14; $i++)
                                     <a class="btn
                                     @if (isset($booking))
-                                @foreach($booking as $book)
-                                    @if(($book->row == $j) && $book->seat == $i)
+                                         @foreach($booking as $book)
+                                    @if(($book->row == $j) && $book->seat == $i && $book->user_id == $user )
+                                            btn-success  disabled
+                                    @elseif(($book->row == $j) && $book->seat == $i)
                                             btn-dark bought disabled
                                     @else
                                            btn-primary seat
                                     @endif
-                                @endforeach
+                                         @endforeach
 
                                 @endif
                                 btn-primary seat
@@ -165,18 +174,21 @@
                             <div class="d-flex justify-content-center col-md-10" style="width: 800px">
                                 @for ($i=1; $i<19; $i++)
                                     <a class="btn
-                                    @if (isset($booking))
-                                @foreach($booking as $book)
-                                    @if(($book->row == 10) && $book->seat == $i)
+                                  @if (isset($booking))
+                                         @foreach($booking as $book)
+                                    @if(($book->row == 10) && $book->seat == $i && $book->user_id == $user )
+                                            btn-success  disabled
+                                    @elseif(($book->row == 10) && $book->seat == $i)
                                             btn-dark bought disabled
                                     @else
                                            btn-primary seat
                                     @endif
-                                @endforeach
+                                         @endforeach
+
                                 @endif
                                 btn-primary seat
                                     id" id="seat">
-                                        {{ $i }}
+                                            {{ $i }}
                                         <input type="hidden" class="seat_id" value="{{ $i }}">
                                         <input type="hidden" class="row_id" value="10">
                                     </a>
@@ -241,6 +253,7 @@
         });
 
         $(document).on('click', '.book', book);
+        $(document).on('click', '.buy', book);
         function book() {
                 let seats_id = [];
                 let rows_id = [];
@@ -300,16 +313,6 @@
             background-color: #1e7e34;
         }
 
-        .bought
-        {
-            background-color: #333333;
-            margin-right: 5px;
-            width: 80px
-        }
-        .bought:hover
-        {
-            background-color: #333333;
-        }
 
     </style>
 

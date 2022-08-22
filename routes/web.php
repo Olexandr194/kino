@@ -13,6 +13,9 @@ Route::group(['namespace' => 'Main'], function (){
     Route::get('/schedule/filter', [App\Http\Controllers\Main\SchedulesController::class, 'filter'])->name('main.schedule.filter');
     Route::get('/booking/{schedule}', [App\Http\Controllers\Main\BookingController::class, 'index'])->name('main.schedule.booking');
     Route::get('/book', [App\Http\Controllers\Main\BookingController::class, 'book'])->name('main.schedule.book');
+    Route::get('/cinemas', [App\Http\Controllers\Main\CinemasController::class, 'index'])->name('main.cinemas.index');
+    Route::get('/cinema/{cinema_name}', [App\Http\Controllers\Main\CinemasController::class, 'single_cinema'])->name('main.cinemas.single_cinema');
+    Route::get('/cinema_hall/{cinema_hall}', [App\Http\Controllers\Main\CinemasController::class, 'cinema_hall'])->name('main.cinemas.cinema_hall');
 });
 
 Route::group(['namespace' => 'Personal'], function (){
@@ -29,6 +32,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
         Route::post('/', [App\Http\Controllers\Admin\CinemasController::class, 'store'])->name('admin.cinemas.store');
         Route::post('/hall_delete', [App\Http\Controllers\Admin\CinemasController::class, 'destroy_hall'])->name('admin.cinemas.destroy_hall');
         Route::get('/{cinema}', [App\Http\Controllers\Admin\CinemasController::class, 'show'])->name('admin.cinemas.show');
+        Route::patch('/update{cinema}', [App\Http\Controllers\Admin\CinemasController::class, 'update'])->name('admin.cinemas.update');
         Route::post('/cinema_delete', [App\Http\Controllers\Admin\CinemasController::class, 'destroy_cinema'])->name('admin.cinemas.destroy_cinema');
     });
 
