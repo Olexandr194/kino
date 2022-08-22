@@ -77,7 +77,7 @@
                             <a class="nav-link" href="{{ route('main.cinemas.index') }}">Кінотеатри</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Акції</a>
+                            <a class="nav-link" href="{{ route('main.actions.index') }}">Акції</a>
                         </li>
                         <!-- Navbar dropdown -->
                         <li class="nav-item dropdown">

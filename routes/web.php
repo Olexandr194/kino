@@ -16,6 +16,8 @@ Route::group(['namespace' => 'Main'], function (){
     Route::get('/cinemas', [App\Http\Controllers\Main\CinemasController::class, 'index'])->name('main.cinemas.index');
     Route::get('/cinema/{cinema_name}', [App\Http\Controllers\Main\CinemasController::class, 'single_cinema'])->name('main.cinemas.single_cinema');
     Route::get('/cinema_hall/{cinema_hall}', [App\Http\Controllers\Main\CinemasController::class, 'cinema_hall'])->name('main.cinemas.cinema_hall');
+    Route::get('/actions', [App\Http\Controllers\Main\ActionController::class, 'index'])->name('main.actions.index');
+    Route::get('/actions/{action}', [App\Http\Controllers\Main\ActionController::class, 'single_action'])->name('main.actions.single_action');
 });
 
 Route::group(['namespace' => 'Personal'], function (){
