@@ -67,15 +67,15 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label>
-                                            <img id="mainImage" src="{{ url('storage/' . $contactPage->logo) }}"
-                                                 class="add-img" style="height: 250px">
+                                            <img id="logoImage" src="{{ url('storage/' . $contactPage->logo) }}"
+                                                 class="add-img" style="height: 150px">
                                         </label>
                                     </div>
                                     <div class="col-md-1">
-                                        <input type="file" id="main-btn" accept="image/*" name="logo"
-                                               onchange="document.getElementById('mainImage').src = window.URL.createObjectURL(this.files[0])"
+                                        <input type="file" id="logo-btn" accept="image/*" name="logo"
+                                               onchange="document.getElementById('logoImage').src = window.URL.createObjectURL(this.files[0])"
                                                hidden/>
-                                        <label class="input" for="main-btn">Завантажити</label>
+                                        <label class="input" for="logo-btn">Завантажити</label>
 
                                     </div>
                                     <div class="col-md-1 ml-3">
@@ -97,7 +97,7 @@
                                     <div class="col-md-2">
                                         <label>
                                             <img id="mainImage" src="{{ url('storage/' . $contactPage->main) }}"
-                                                 class="add-img" style="height: 250px">
+                                                 class="add-img" style="height: 200px">
                                         </label>
                                     </div>
                                     <div class="col-md-1 mt-4">

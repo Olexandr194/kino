@@ -18,6 +18,8 @@ Route::group(['namespace' => 'Main'], function (){
     Route::get('/cinema_hall/{cinema_hall}', [App\Http\Controllers\Main\CinemasController::class, 'cinema_hall'])->name('main.cinemas.cinema_hall');
     Route::get('/actions', [App\Http\Controllers\Main\ActionController::class, 'index'])->name('main.actions.index');
     Route::get('/actions/{action}', [App\Http\Controllers\Main\ActionController::class, 'single_action'])->name('main.actions.single_action');
+    Route::get('/pages/{page}', [App\Http\Controllers\Main\PagesController::class, 'pages'])->name('main.pages.index');
+    Route::get('/contact_page/', [App\Http\Controllers\Main\PagesController::class, 'contact_page'])->name('main.pages.contact_page');
 });
 
 Route::group(['namespace' => 'Personal'], function (){

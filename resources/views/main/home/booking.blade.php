@@ -118,9 +118,9 @@
                                     <a class="btn
                                      @if (isset($booking))
                                          @foreach($booking as $book)
-                                    @if(($book->row == 1) && $book->seat == $i && $book->user_id == $user )
+                                    @if(($book->row == 3) && $book->seat == $i && $book->user_id == $user )
                                             btn-success  disabled
-                                    @elseif(($book->row == 1) && $book->seat == $i)
+                                    @elseif(($book->row == 3) && $book->seat == $i)
                                             btn-dark bought disabled
                                     @else
                                            btn-primary seat

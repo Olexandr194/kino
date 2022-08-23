@@ -81,29 +81,32 @@
                         </li>
                         <!-- Navbar dropdown -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown">
                                 Про кінотеатр
                             </a>
                             <!-- Dropdown menu -->
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li>
+                                    <a class="dropdown-item" href="{{ route('main.pages.index', 1) }}">Про кінотеатр</a>
+                                </li>
+                                <li>
                                     <a class="dropdown-item" href="#">Новини</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">Кафе-Бар</a>
+                                    <a class="dropdown-item" href="{{ route('main.pages.index', 2) }}">Кафе-Бар</a>
                                 </li>
                                 {{--<li><hr class="dropdown-divider" /></li>--}}
                                 <li>
-                                    <a class="dropdown-item" href="#">VIP-ал</a>
+                                    <a class="dropdown-item" href="{{ route('main.pages.index', 3) }}">VIP-зал</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">Дитяча кімнатар</a>
+                                    <a class="dropdown-item" href="{{ route('main.pages.index', 5) }}">Дитяча кімнатар</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">Реклама</a>
+                                    <a class="dropdown-item" href="{{ route('main.pages.index', 4) }}">Реклама</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">Контакти</a>
+                                    <a class="dropdown-item" href="{{ route('main.pages.contact_page') }}">Контакти</a>
                                 </li>
                             </ul>
                         </li>

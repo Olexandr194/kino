@@ -109,7 +109,7 @@
                     <div class="carousel-item {{$i == 0 ? 'active' : ''}}" data-mdb-interval="{{ $bottom_banners[$i]->bottom_scroll_time }}">
                         <img src="{{ url('storage/' . $bottom_banners[$i]->bottom_image) }}" class="d-block w-100" alt="Sunset Over the City" style="height: 500px"/>
                         <div class="carousel-caption d-none d-md-block">
-                            <h5>{{--{{ $bottom_banners[$i]->bottom_text }--}}}</h5>
+                            <h5>{{--{{ $bottom_banners[$i]->bottom_text }--}}</h5>
                             <p>{{--Nulla vitae elit libero, a pharetra augue mollis interdum.--}}</p>
                         </div>
                     </div>
