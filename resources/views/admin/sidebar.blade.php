@@ -9,7 +9,7 @@
     <div class="sidebar">
         <ul class="pt-3 nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.main') }}" class="nav-link">
                     <i class="nav-icon fas fa-arrow-alt-circle-up"></i>
                     <p>
                         Статистика
@@ -81,7 +81,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.mailing_list.index') }}" class="nav-link">
                     <i class="nav-icon fas fa-mail-bulk"></i>
                     <p>
                         Розсилка

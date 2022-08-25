@@ -20,6 +20,8 @@ Route::group(['namespace' => 'Main'], function (){
     Route::get('/actions/{action}', [App\Http\Controllers\Main\ActionController::class, 'single_action'])->name('main.actions.single_action');
     Route::get('/pages/{page}', [App\Http\Controllers\Main\PagesController::class, 'pages'])->name('main.pages.index');
     Route::get('/contact_page/', [App\Http\Controllers\Main\PagesController::class, 'contact_page'])->name('main.pages.contact_page');
+    Route::get('/news', [App\Http\Controllers\Main\NewsController::class, 'index'])->name('main.news.index');
+    Route::get('/news/{news}', [App\Http\Controllers\Main\NewsController::class, 'single_news'])->name('main.news.single_news');
 });
 
 Route::group(['namespace' => 'Personal'], function (){
@@ -123,7 +125,17 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
         Route::get('/{schedule}/edit', [App\Http\Controllers\Admin\ScheduleController::class, 'edit'])->name('admin.schedules.edit');
         Route::patch('/{schedule}', [App\Http\Controllers\Admin\ScheduleController::class, 'update'])->name('admin.schedules.update');
         Route::post('/schedule/delete', [App\Http\Controllers\Admin\ScheduleController::class, 'destroy'])->name('admin.schedules.destroy');
+    });
 
+    Route::group(['namespace' => 'Mailing_list', 'prefix' => 'mailing_list'], function (){
+        Route::get('/', [App\Http\Controllers\Admin\MailingListController::class, 'index'])->name('admin.mailing_list.index');
+        Route::post('/save_html', [App\Http\Controllers\Admin\MailingListController::class, 'save_html'])->name('admin.mailing_list.save_html');
+        Route::post('/delete_html', [App\Http\Controllers\Admin\MailingListController::class, 'delete_html'])->name('admin.mailing_list.delete_html');
+        Route::get('/reload', [App\Http\Controllers\Admin\MailingListController::class, 'reload'])->name('admin.mailing_list.reload');
+        Route::get('/select_users', [App\Http\Controllers\Admin\MailingListController::class, 'select_users'])->name('admin.mailing_list.select_users');
+        Route::get('/checked_users', [App\Http\Controllers\Admin\MailingListController::class, 'checked_users'])->name('admin.mailing_list.checked_users');
+        Route::get('/search_users', [App\Http\Controllers\Admin\MailingListController::class, 'search_users'])->name('admin.mailing_list.search_users');
+        Route::post('/send', [App\Http\Controllers\Admin\MailingListController::class, 'send'])->name('admin.mailing_list.send');
     });
 
 });

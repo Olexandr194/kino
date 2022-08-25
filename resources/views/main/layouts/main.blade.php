@@ -90,7 +90,7 @@
                                     <a class="dropdown-item" href="{{ route('main.pages.index', 1) }}">Про кінотеатр</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">Новини</a>
+                                    <a class="dropdown-item" href="{{ route('main.news.index') }}">Новини</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('main.pages.index', 2) }}">Кафе-Бар</a>

@@ -42,62 +42,62 @@
 
 
             <div class="col-lg-9 stretch-card grid-margin" style="width: 1500px">
+                <h3 class="text-center mb-4" style="color: #fd7605">Зал №{{ $cinema_hall->number }}</h3>
                 <div class="card">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-11" style="margin-left: 50px">
-                                <h3 class="text-center">Зал №{{ $cinema_hall->number }}</h3>
-                            </div>
-                    </div>
-                    </div>
-
                     <div class="card-body">
                             <div>
                                 {!! $cinema_hall->description !!}
                             </div>
-
                     </div>
+                </div>
 
-                    <div class="card-footer" style="background-size: cover;  background: #0c525d fixed;">
-                        <div class=""  style="width: 1550px; margin-left: -22px; margin-top: 20px ">
-                            <div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel" style="width: 1473px">
-                                <!-- Indicators -->
-                                <div class="carousel-indicators">
-                                    @for ($i =0; $i<count($images); $i++)
-                                        <button
-                                            type="button"
-                                            data-mdb-target="#carouselBasicExample"
-                                            data-mdb-slide-to="{{ $i }}"
-                                            class="{{ $i == 0 ? 'active' : ''}}"
-                                            aria-current="{{ $i == 0 ? 'true' : ''}}"
-                                            aria-label="Slide {{ $i + 1}}"
-                                        ></button>
-                                    @endfor
-                                </div>
+                <div class="mt-5">
+                    <h3 class="text-center mb-4" style="color: #fd7605">Карта залу</h3>
+                    <div class="" style="height: 600px;">
+                        <img style="height: 600px;" class="w-100" src="{{ url('storage/' . $cinema_hall->scheme) }}">
+                    </div>
+                </div>
 
-                                <!-- Inner -->
-                                <div class="carousel-inner">
-                                    <!-- Single item -->
-                                    @for ($i =0; $i<count($images); $i++)
-                                        <div class="carousel-item {{$i == 0 ? 'active' : ''}}" data-mdb-interval="3000">
-                                            <img src="{{ url('storage/' . $images[$i]->image) }}" class="d-block w-100" alt="Sunset Over the City" style="height: 600px"/>
-                                            <div class="carousel-caption d-none d-md-block">
-                                            </div>
-                                        </div>
-                                    @endfor
-                                </div>
-                                <!-- Inner -->
-
-                                <!-- Controls -->
-                                <button class="carousel-control-prev" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
+                <div class="card-footer" style="background-size: cover;  background: #0c525d fixed;">
+                    <h3 class="text-center mb-4 mt-5" style="color: #fd7605">ФОТОГАЛЕРЕЯ</h3>
+                    <div class=""  style="width: 1550px; margin-left: -22px; margin-top: 20px ">
+                        <div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel" style="width: 1473px">
+                            <!-- Indicators -->
+                            <div class="carousel-indicators">
+                                @for ($i =0; $i<count($images); $i++)
+                                    <button
+                                        type="button"
+                                        data-mdb-target="#carouselBasicExample"
+                                        data-mdb-slide-to="{{ $i }}"
+                                        class="{{ $i == 0 ? 'active' : ''}}"
+                                        aria-current="{{ $i == 0 ? 'true' : ''}}"
+                                        aria-label="Slide {{ $i + 1}}"
+                                    ></button>
+                                @endfor
                             </div>
+
+                            <!-- Inner -->
+                            <div class="carousel-inner">
+                                <!-- Single item -->
+                                @for ($i =0; $i<count($images); $i++)
+                                    <div class="carousel-item {{$i == 0 ? 'active' : ''}}" data-mdb-interval="3000">
+                                        <img src="{{ url('storage/' . $images[$i]->image) }}" class="d-block w-100" alt="Sunset Over the City" style="height: 600px"/>
+                                        <div class="carousel-caption d-none d-md-block">
+                                        </div>
+                                    </div>
+                                @endfor
+                            </div>
+                            <!-- Inner -->
+
+                            <!-- Controls -->
+                            <button class="carousel-control-prev" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
                     </div>
                 </div>
