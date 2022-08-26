@@ -229,8 +229,8 @@
                         $('.reload').html(`<h5 class="mt-5">Кількість листів:` + firstData + `</h5>`)
                         $('#send_mail').prop("disabled",false);
                     }else {
-                        $('.reload').html(`<h5 class="mt-5">Кількість листів:` + data + `</h5>`)
-                        $('.done').html('<h5 class="mt-5">Розсилку виконано на:' + Math.round(100 -  (data/firstData * 100))  + '% </h5>');
+                        $('.reload').html(`<h5 class="mt-5">Кількість листів: ` + data + `</h5>`)
+                        $('.done').html('<h5 class="mt-5">Розсилку виконано на: ' + Math.round(100 -  (data/firstData * 100))  + '% </h5>');
                         sending(firstData)
                     }
                 }

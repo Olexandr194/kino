@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Main;
 use App\Http\Controllers\Controller;
 use App\Models\BottomBanner;
 use App\Models\Cinema;
+use App\Models\DeviceInformation;
 use App\Models\MainBanner;
 use App\Models\Movie;
 use App\Models\MovieImages;
@@ -13,6 +14,7 @@ use App\Models\TopBanner;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Jenssegers\Agent\Agent;
 
 class MainPageController extends Controller
 {
@@ -27,6 +29,7 @@ class MainPageController extends Controller
         $movies = Movie::all();
         $schedules = ScheduleModel::all();
         $date = Carbon::createFromDate();
+        $agent = new Agent();
 
         /*--------------------------Видаляю старі розклади-----------------------*/
         foreach ($schedules as $schedule) {
@@ -59,6 +62,19 @@ class MainPageController extends Controller
             }
         }
 
-        return view('main.home.index', compact('top_banners', 'bottom_banners', 'main_banner', 'movies', 'now_movies', 'soon_movies', 'date'));
+        return view('main.home.index', compact('top_banners', 'bottom_banners', 'main_banner', 'movies', 'now_movies', 'soon_movies', 'date', 'agent'));
     }
+
+    public function data($device, $browser, $platform, $type)
+    {
+        $data = new DeviceInformation();
+        $data->device = $device;
+        $data->browser = $browser;
+        $data->platform = $platform;
+        $data->type = $type;
+        $data->date = date('Y-m-d H:i');
+        $data->save();
+
+    }
+
 }

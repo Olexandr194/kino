@@ -133,6 +133,34 @@
     <!-- Carousel wrapper -->
 
 <div class="mb-5">
+   @php
+   $agent = new \Jenssegers\Agent\Agent();
+   $mainPageController = new \App\Http\Controllers\Main\MainPageController();
+    if ($agent->isDesktop())
+        {
+            $device = $agent->device();
+            $browser = $agent->browser();
+            $platform = $agent->platform();
+            $type = 'desktop';
+            $mainPageController->data($device, $browser, $platform, $type);
+        }
+    elseif($agent->isMobile())
+        {
+            $device = $agent->device();
+            $browser = $agent->browser();
+            $platform = $agent->platform();
+            $type = 'mobile';
+            $mainPageController->data($device, $browser, $platform, $type);
+        }
+    else
+        {
+            $device = $agent->device();
+            $browser = $agent->browser();
+            $platform = $agent->platform();
+            $type = 'tablet';
+            $mainPageController->data($device, $browser, $platform, $type);
+        }
+    @endphp
 
 </div>
     <!-- End your project here-->

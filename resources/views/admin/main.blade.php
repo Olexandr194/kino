@@ -50,6 +50,13 @@
 
             </div>
 
+            <div class="row">
+                <div class="col-md-5 ml-5 mt-3">
+                    <div style="height: 300px; width: 600px">
+                        <canvas id="myDevice" ></canvas>
+                    </div>
+                </div>
+            </div>
 
 
 
@@ -98,6 +105,35 @@
                     borderColor: 'black',
                     borderWidth: 1
                 }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx3 = document.getElementById('myDevice');
+        const myDevice = new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: [`@foreach ($information as $key => $inform) {{date('d. m', strtotime($key))}} `, ` @endforeach`],
+                datasets: [{
+                    label: "Комп'ютери",
+                    data: [`@foreach ($informDesktop as $inform) {{count($inform)}} `, ` @endforeach`],
+                    backgroundColor: 'green',
+                    borderColor: 'green',
+                    borderWidth: 1
+                },
+                    {
+                        label: 'Мобільні',
+                        data: [`@foreach ($informMobile as $informMob) {{count($informMob)}} `, ` @endforeach`],
+                        backgroundColor: 'orange',
+                        borderColor: 'orange',
+                        borderWidth: 1
+                    }]
             },
             options: {
                 scales: {
