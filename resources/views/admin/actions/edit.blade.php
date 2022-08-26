@@ -176,6 +176,26 @@
                                 </div>
                             </div>
                             {{--------------------------------------------------------------------------------------------------------------------------------------------}}
+                            <div class="form-group mt-5">
+                                <div class="d-flex">
+                                    <div class="col-2 md-2">
+                                        <label>Кінотетри:</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="form-group">
+                                            <select class="select2" name="cinema_ids[]" multiple="multiple" data-placeholder="Оберіть кінотеатр" style="width: 100%;">
+                                                @foreach($cinemas as $cinema)
+                                                    <option {{ is_array($action->cinemas->pluck('id')->toArray()) && in_array($cinema->id, $action->cinemas->pluck('id')->toArray()) ? 'selected' : '' }} value="{{ $cinema->id }}">{{ $cinema->title }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('cinema_ids')
+                                            <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{--------------------------------------------------------------------------------------------------------------------------------------------}}
 
                             <div class="form-group mt-5">
                                 <div class="d-flex">

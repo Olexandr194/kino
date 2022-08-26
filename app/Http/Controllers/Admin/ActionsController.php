@@ -16,6 +16,8 @@ use App\Http\Requests\Admin\News\NewsStoreRequest;
 use App\Http\Requests\Admin\News\NewsUpdateRequest;
 use App\Models\Action;
 use App\Models\ActionImages;
+use App\Models\Cinema;
+use App\Models\CinemaActions;
 use App\Models\News;
 use App\Models\NewsImages;
 use Illuminate\Http\Request;
@@ -32,13 +34,20 @@ class ActionsController extends Controller
 
     public function create()
     {
-        return view('admin.actions.create');
+        $cinemas = Cinema::all();
+        return view('admin.actions.create', compact('cinemas'));
     }
 
     public function store(ActionsStoreRequest $request, ActionImagesStoreRequest $imgRequest)
     {
         $data = $request->validated();
         $imgData = $imgRequest->validated();
+
+        if (isset($data['cinema_ids']))
+        {
+            $cinema_ids = $data['cinema_ids'];
+            unset($data['cinema_ids']);
+        }
 
         if(!isset($data['status'])) {
             $data['status'] = 'Не опубліковано';
@@ -51,6 +60,7 @@ class ActionsController extends Controller
 
         $data['main_image'] = Storage::disk('public')->put('/images', $data['main_image']);
         $action = Action::firstOrCreate($data);
+        $action->cinemas()->attach($cinema_ids);
 
         if (isset($images)) {
             foreach ($images as $image) {
@@ -67,6 +77,7 @@ class ActionsController extends Controller
     public function edit(Action $action)
     {
         $images = ActionImages::all()->where('action_id', $action->id);
+        $cinemas = Cinema::all();
         foreach ($images as $item) {
             $image[] = $item->image;
             $id[] = $item->id;
@@ -76,13 +87,19 @@ class ActionsController extends Controller
             $id[] = 0;
         }
 
-        return view('admin.actions.edit', compact('action', 'image', 'id'));
+        return view('admin.actions.edit', compact('action', 'image', 'id', 'cinemas'));
     }
 
     public function update(ActionsUpdateRequest $request, ActionImagesUpdateRequest $imgRequest, $id)
     {
         $data = $request->validated();
         $new_images = $imgRequest->validated();
+        if (isset($data['cinema_ids']))
+        {
+            $cinema_ids = $data['cinema_ids'];
+            unset($data['cinema_ids']);
+        }
+
         $action = Action::where('id', $id)->first();
 
         if(!isset($data['status'])) {
@@ -100,6 +117,7 @@ class ActionsController extends Controller
             $data['main_image'] = $action['main_image'];
         }
         $action->update($data);
+        $action->cinemas()->sync($cinema_ids);
 
         if (isset($updateImages)) {
             foreach ($updateImages as $image) {
@@ -119,6 +137,11 @@ class ActionsController extends Controller
 
         if (Action::where('id', $id)->exists()) {
             $action = Action::where('id', $id)->first();
+            $cinema_ids = CinemaActions::where('action_id', $id)->get();
+            foreach ($cinema_ids as $id)
+            {
+                $id->delete();
+            }
             $action->delete();
         }
         $actions = Action::orderBy('created_at', 'DESC')->get();

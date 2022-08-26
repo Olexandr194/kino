@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\News\NewsImagesStoreRequest;
 use App\Http\Requests\Admin\News\NewsImagesUpdateRequest;
 use App\Http\Requests\Admin\News\NewsStoreRequest;
 use App\Http\Requests\Admin\News\NewsUpdateRequest;
+use App\Models\Cinema;
+use App\Models\CinemaNews;
 use App\Models\News;
 use App\Models\NewsImages;
 use Illuminate\Http\Request;
@@ -23,13 +25,19 @@ class NewsController extends Controller
 
     public function create()
     {
-        return view('admin.news.create');
+        $cinemas = Cinema::all();
+        return view('admin.news.create', compact('cinemas'));
     }
 
     public function store(NewsStoreRequest $request, NewsImagesStoreRequest $imgRequest)
     {
         $data = $request->validated();
         $imgData = $imgRequest->validated();
+        if (isset($data['cinema_ids']))
+        {
+            $cinema_ids = $data['cinema_ids'];
+            unset($data['cinema_ids']);
+        }
 
         if(!isset($data['status'])) {
             $data['status'] = 'Не опубліковано';
@@ -42,6 +50,7 @@ class NewsController extends Controller
 
         $data['main_image'] = Storage::disk('public')->put('/images', $data['main_image']);
         $news = News::firstOrCreate($data);
+        $news->cinemas()->attach($cinema_ids);
 
         if (isset($images)) {
             foreach ($images as $image) {
@@ -58,6 +67,7 @@ class NewsController extends Controller
     public function edit(News $news)
     {
         $images = NewsImages::all()->where('news_id', $news->id);
+        $cinemas = Cinema::all();
 
         foreach ($images as $item) {
             $image[] = $item->image;
@@ -69,13 +79,18 @@ class NewsController extends Controller
             $id[] = 0;
         }
 
-        return view('admin.news.edit', compact('news', 'image', 'id'));
+        return view('admin.news.edit', compact('news', 'image', 'id', 'cinemas'));
     }
 
     public function update(NewsUpdateRequest $request, NewsImagesUpdateRequest $imgRequest, $id)
     {
         $data = $request->validated();
         $new_images = $imgRequest->validated();
+        if (isset($data['cinema_ids']))
+        {
+            $cinema_ids = $data['cinema_ids'];
+            unset($data['cinema_ids']);
+        }
         $news = News::where('id', $id)->first();
 
         if(!isset($data['status'])) {
@@ -93,6 +108,7 @@ class NewsController extends Controller
             $data['main_image'] = $news['main_image'];
         }
         $news->update($data);
+        $news->cinemas()->sync($cinema_ids);
 
         if (isset($updateImages)) {
             foreach ($updateImages as $image) {
@@ -112,6 +128,11 @@ class NewsController extends Controller
 
         if (News::where('id', $id)->exists()) {
             $news = News::where('id', $id)->first();
+            $cinema_ids = CinemaNews::where('news_id', $id)->get();
+            foreach ($cinema_ids as $id)
+            {
+                $id->delete();
+            }
             $news->delete();
         }
         $news = News::orderBy('created_at', 'DESC')->get();

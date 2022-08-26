@@ -9,4 +9,9 @@ class News extends Model
 {
     protected $table = 'news';
     protected $guarded = false;
+
+    public function cinemas()
+    {
+        return $this->belongsToMany(Cinema::class, 'cinema_news', 'news_id', 'cinema_id');
+    }
 }

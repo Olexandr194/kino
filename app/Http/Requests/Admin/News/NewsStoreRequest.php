@@ -26,6 +26,8 @@ class NewsStoreRequest extends FormRequest
             'seo_keywords' => 'nullable',
             'seo_description' => 'nullable',
             'news_id' => 'nullable',
+            'cinema_ids' => 'nullable|array',
+            'cinema_ids.*' => 'nullable|exists:cinemas,id',
         ];
     }
 }

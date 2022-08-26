@@ -23,6 +23,12 @@
                     <div class="row">
                        <div class="col-md-4">
                            <img style="height: 300px; width: 400px" class="" src="{{ url('storage/' . $action->main_image) }}">
+                           <h6 style="color: #fd7605">{{ $action->date }}</h6>
+                           @foreach($action->cinemas as $cinema)
+                               <a style="color: #fd7605" href="{{ route('main.cinemas.single_cinema', $cinema->id) }}">
+                                   <button class="btn btn-danger mb-1" style="background: #fd7605; width: 185px">{{ $cinema->title }}</button>
+                               </a>
+                           @endforeach
                        </div>
                         <div class="col-md-8 te">
                             <h7 style="color: #fd7605;">{!! $action->description !!}</h7>

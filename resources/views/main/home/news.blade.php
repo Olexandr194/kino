@@ -22,14 +22,21 @@
                 <div class="card-body" style="background-size: cover;  background: #0c525d fixed; ">
                     <h1 class="text-center mb-5" style="color: #fd7605">Новини</h1>
                     @foreach($news as $new)
-                        <figure class="figure" style="width: 385px; height: 320px; margin-left: 6px; margin-right: 40px ">
+                        <figure class="figure" style="width: 385px; height: 390px; margin-left: 6px; margin-right: 40px ">
                             <img
                                 src="{{ url('storage/' . $new->main_image) }}"
                                 class="figure-img img-fluid rounded shadow-3 mb-3"
                                 alt="Taking up Water with a Spoon"
                                 style="height: 250px; width: 385px"
                             />
-                            <figcaption class="figure-caption"><h5 class="text-center" style="color: #fd7605">
+                            <figcaption class="figure-caption">
+                                    <h6 style="color: #fd7605">{{ $new->date }}</h6>
+                                    @foreach($new->cinemas as $cinema)
+                                        <a style="color: #fd7605" href="{{ route('main.cinemas.single_cinema', $cinema->id) }}">
+                                            <button class="btn btn-danger mb-1" style="background: #fd7605; width: 185px">{{ $cinema->title }}</button>
+                                        </a>
+                                    @endforeach
+                                <h5 class="text-center" style="color: #fd7605">
                                     <a style="color: #fd7605" href="{{ route('main.news.single_news', $new->id) }}">{{ $new->title }}</a></h5></figcaption>
                         </figure>
                     @endforeach
