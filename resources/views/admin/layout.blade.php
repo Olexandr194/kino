@@ -8,6 +8,7 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
+    <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -28,6 +29,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/test.css') }}">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('custom_js')
     <link rel="icon" href="{{ asset('images/promin_logo.svg') }}" type="image/x-icon" />

@@ -14,8 +14,6 @@
 
         <!-- Main content -->
         <section class="content">
-            <form action="{{ route('admin.mailing_list.send') }}" method="POST" enctype="multipart/form-data">
-                @csrf
             <div class="container-fluid">
                 <!-- Small boxes (Stat box) -->
                 <div class="text-center">
@@ -56,7 +54,9 @@
 
                         <h5 class="mt-5">Шаблон який використовується:</h5>
 
-                        <h5 class="mt-5">Кількість листів: @if (isset($count)) {{ $count }} @endif</h5>
+                        <div class="reload">
+                        <h5 class="mt-5">Кількість листів: </h5>
+                        </div>
 
                     </div>
                     <div class="col-md-3 mt-4">
@@ -72,7 +72,9 @@
 
                         </div>
 
+                        <div class="done">
                         <h5 class="mt-5">Розсилку виконано на:</h5>
+                        </div>
                     </div>
 
                     <div class="col-md-4 mt-4">
@@ -93,15 +95,20 @@
                         </div>
                     </div>
                 </div>
+                <div class="take_user1">
                 @if (isset($selected_users))
+                        <div class="take_user2">
                     @foreach($selected_users as $id)
-                <input type="hidden" class="user_id" name="id[]"
+                        <div class="take_user3">
+                        <input type="hidden" class="user_id" id="idi" name="id[]"
                        value="{{ $id }}">
+                        </div>
                     @endforeach
+                        </div>
                 @endif
-
+                        </div>
                 <div class="text-center mt-5">
-                    <input type="submit" class="btn btn-dark" style="width: 200px" value="Почати розсилку">
+                    <button class="btn btn-dark " id="send_mail" type="button" style="width: 200px">Почати розсилку</button>
                 </div>
             </div>
 
@@ -177,8 +184,58 @@
             $('#in_use').html(`<p class="text-primary">` + checkedTemplate + `</p>`)
         })
 
+        $(document).on('click', '#send_mail', function () {
+            let users = [] ;
+            let i = 0 ;
+            let html = $('input[name=mailing_list]:checked').val();
+            let radio = $('input[name=email]:checked').val();
+            $('.user_id').each(function () {
+                users[i] = $(this).closest('.take_user3').find('#idi').val();
+                i++;
+            })
+            console.log(users);
+            console.log(html);
+            console.log(radio);
+                $.ajax({
+                    url: '{{ route('admin.mailing_list.send') }}',
+                    type: 'POST',
+                    data: {
+                        users: users,
+                        html: html,
+                        radio:radio,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: (data) => {
+                        $('.done').html('<p id="">' +  Math.round(100 -  (data/data * 100))  + '% </p>')
+                        sending(data);
+                        $('#send_mail').prop("disabled",true);
+                    }
+                })
+            })
 
-
+        function sending(firstData){
+            $.ajax({
+                url: '{{route('admin.mailing_list.sending')}}',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: (data) => {
+                    console.log(data);
+                    if (data == 0){
+                        $('.done').html('<h5 class="mt-5">Розсилку виконано на: 100% </h5>')
+                        $('.reload').html(`<h5 class="mt-5">Кількість листів:` + firstData + `</h5>`)
+                        $('#send_mail').prop("disabled",false);
+                    }else {
+                        $('.reload').html(`<h5 class="mt-5">Кількість листів:` + data + `</h5>`)
+                        $('.done').html('<h5 class="mt-5">Розсилку виконано на:' + Math.round(100 -  (data/firstData * 100))  + '% </h5>');
+                        sending(firstData)
+                    }
+                }
+            })
+        }
     </script>
 
 @endsection

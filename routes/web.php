@@ -136,6 +136,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
         Route::get('/checked_users', [App\Http\Controllers\Admin\MailingListController::class, 'checked_users'])->name('admin.mailing_list.checked_users');
         Route::get('/search_users', [App\Http\Controllers\Admin\MailingListController::class, 'search_users'])->name('admin.mailing_list.search_users');
         Route::post('/send', [App\Http\Controllers\Admin\MailingListController::class, 'send'])->name('admin.mailing_list.send');
+        Route::post('/sending', [App\Http\Controllers\Admin\MailingListController::class, 'sending'])->name('admin.mailing_list.sending');
     });
 
 });

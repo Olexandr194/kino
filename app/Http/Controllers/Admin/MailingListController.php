@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\MailingList\UsersListRequest;
 use App\Models\MailingList;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -92,14 +93,14 @@ class MailingListController extends Controller
         return view('admin.mailing_list.select_users', compact('users'));
     }
 
-    public function send(MailingListRequest $request)
+    public function send(Request $request)
     {
-        if ($request->email === 'all') {
+        if ($request->radio === 'all') {
             $users = User::all();
         } else {
-            $users = User::whereIn('id', $request->id)->get();
+            $users = User::whereIn('id', $request->users)->get();
         }
-        $html_title = MailingList::where('id', $request->mailing_list)->first();
+        $html_title = MailingList::where('id', $request->html)->first();
         $html = Storage::disk('public')->get($html_title->path);
 
         foreach ($users as $user) {
@@ -109,9 +110,15 @@ class MailingListController extends Controller
 
         $queue = DB::table('jobs')->get();
         $count = !empty($queue) ? count($queue) : null;
-        $all_lists = MailingList::orderBy('created_at', 'DESC')->get()->take(5);
+        return $count;
 
-        return view('admin.mailing_list.index', compact('all_lists', 'count'));
+    }
+
+
+    public function sending(){
+        $queue = DB::table('jobs')->get();
+        $count = isset($queue) ? count($queue) : 0;
+        return $count;
     }
 
 

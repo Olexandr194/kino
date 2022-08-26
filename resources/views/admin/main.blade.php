@@ -1,4 +1,8 @@
 @extends('admin.layout')
+
+@section('custom_js')
+
+@endsection
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -7,13 +11,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v1</li>
-                    </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -23,73 +22,93 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <!-- Small boxes (Stat box) -->
             <div class="row">
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>150</h3>
-
-                            <p>New Orders</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="col-md-5 ml-5 mt-3">
+                    <div style="height: 300px; width: 600px">
+                        <canvas id="myChart" ></canvas>
                     </div>
                 </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                            <p>Bounce Rate</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="col-md-3 ml-5">
+                    <div style="height: 400px; width: 300px">
+                        <canvas id="newChart" ></canvas>
                     </div>
                 </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>44</h3>
+            <div class="col-lg-3 col-5">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ count($users) }}</h3>
 
-                            <p>User Registrations</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <p>Зареєстровано користувачів</p>
                     </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>65</h3>
-
-                            <p>Unique Visitors</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
                     </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
-                <!-- ./col -->
             </div>
+
+            </div>
+
+
+
 
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+        const ctx = document.getElementById('myChart');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [`@foreach ($schedules as $key => $scheduleDate) {{date('d. m', strtotime($key))}} `, ` @endforeach`],
+                datasets: [{
+                    label: 'Кількість сеансів за наступні 14 днів',
+                    data: [`@foreach ($schedules as $schedule) {{count($schedule)}} `, ` @endforeach`],
+                    backgroundColor: 'green',
+                    borderColor: 'green',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('newChart');
+        const newChart = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Чоловіки', 'Жінки', 'Не зазнечено'],
+                datasets: [{
+                    data: [`{{ count($men) }}`, '{{ count($women) }}', '{{ count($else) }}'],
+                    backgroundColor: [
+                        'blue',
+                        'red',
+                        'green',
+                        ],
+                    borderColor: 'black',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+    </script>
+
 @endsection

@@ -160,9 +160,9 @@
         })
 
         $(document).ready(function () {
-            $(document).on('click', '.schedules_to_book', (function (e) {
+            $(document).on('click', '.schedule', (function (e) {
                     e.preventDefault();
-                    $('.schedule').removeClass('schedule btn btn btn-outline-dark mt-3').addClass('schedule btn btn btn-dark mt-3 book-date')
+                    $(this).removeClass('schedule btn btn btn-outline-dark mt-3').addClass('schedule btn btn btn-dark mt-3 book-date')
                         .siblings().removeClass('schedule btn btn btn-dark mt-3 book-date').addClass('schedule btn btn btn-outline-dark mt-3');
                 })
             )
